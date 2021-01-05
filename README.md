@@ -1,10 +1,9 @@
 <p align="center">
-   <h2 align="center">Pyticles</h1>
+   <h2 align="center">Pyticles</h2>
    <p align="center">
-      A short library for easy to use particles in Pygame based on <a href="https://www.youtube.com/channel/UCYNrBrBOgTfHswcz2DdZQFA" target="blank">DaFluffyPotato's</a> particle system.
+      A short library for easy to use particles in Pygame based on <a href="" target="blank">DaFluffyPotato's</a> particle system.
    </p>
 </p>
-
 
 # Installation
 
@@ -50,7 +49,7 @@ particles.append(pyticles.Particle(position=pygame.mouse.get_pos(),       # get 
 removes = []  # list of particles to remove because of to small radius
 for particle in particles:
     particle.update(delta_time=delta_time)  # update particle positions and radii; delta time is optional
-if particle.to_remove(): removes.append(particle)  # check if radius size is invalid -> remove particle if not
+if particle.to_remove(): removes.append(particle)  # check if radius size is valid -> remove particle if not
 
 # remove invalid particles
 for i in range(len(removes)):
@@ -61,14 +60,15 @@ for particle in particles:
     particle.draw(screen)
 ```
 
-The shown code was taken from the example program <a href="examples/example.py" target="blank">`examples/example.py`</a>.
+The shown code was taken from the example program [examples/example.py`](examples/example.py).
 
 ![Gif of example program](https://media.giphy.com/media/uz3Ypx10Ib9C8amkfc/giphy.gif)
 
 # License
 
-Distributed under the <a href="https://choosealicense.com/licenses/mit/" target="blank">MIT License</a>. See <a href="LICENSE" target="blank">`LICENSE`</a> for more information.
+Distributed under the [MIT License](https://choosealicense.com/licenses/mit/). See [`LICENSE`](LICENSE) for mor information.
 
 # Contact
 
-grimmigerFuchs - <a href="mailto:grimmigerFuchs" target="blank">grimmigerfuchs@gmail.com</a>
+grimmigerFuchs - [grimmigerfuchs@gmail.com](mailto:grimmigerFuchs)
+Project Link: [https://github.com/grimmigerFuchs/Pyticles](https://github.com/grimmigerFuchs/Pyticles)
