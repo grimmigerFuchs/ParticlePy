@@ -2,7 +2,7 @@
 
 __author__ = "grimmigerFuchs"
 __credits__ = [__author__, "DaFluffyPotato"]
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 
 
 from contextlib import redirect_stdout

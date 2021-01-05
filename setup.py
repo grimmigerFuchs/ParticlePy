@@ -6,8 +6,8 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="pyticles-grimmigerFuchs",
-    version="0.1.1",
+    name="pyticles",
+    version="0.1.2",
     author="grimmigerFuchs",
     author_email="author@example.com",
     description="A short library for easy to use particles in Pygame based on DaFluffyPotato's particle system.",
