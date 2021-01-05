@@ -13,7 +13,7 @@
    ```
 2. Go into the directory
    ```bash
-   cd Pyticles
+   cd Pyticles/
    ```
 3. Run `setup.py`
    ```bash
