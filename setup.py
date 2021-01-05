@@ -1,4 +1,4 @@
-# setup.py
+#!/usr/bin/python3
 
 import setuptools
 
@@ -14,5 +14,4 @@ setuptools.setup(
     install_requires=[
         "pygame~=2.0.1",
     ],
-    python_requires='>=3.6'
 )
