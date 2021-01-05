@@ -1,7 +1,9 @@
-# Pyticles
-
-A short library for easy to use particles in Pygame based
-on <a href="https://www.youtube.com/channel/UCYNrBrBOgTfHswcz2DdZQFA" target="blank">DaFluffyPotato's</a> particle system.
+<p align="center">
+   <h1 align="center">Pyticles</h1>
+   <p align="center">
+      A short library for easy to use particles in Pygame based on <a href="https://www.youtube.com/channel/UCYNrBrBOgTfHswcz2DdZQFA" target="blank">DaFluffyPotato's</a> particle system.
+   </p>
+</p>
 
 # Installation
 
