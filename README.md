@@ -60,7 +60,7 @@ for particle in particles:
     particle.draw(screen)
 ```
 
-The shown code was taken from the example program [examples/example.py`](examples/example.py).
+The shown code was taken from the example program [`examples/example.py`](examples/example.py).
 
 ![Gif of example program](https://media.giphy.com/media/uz3Ypx10Ib9C8amkfc/giphy.gif)
 
@@ -70,5 +70,5 @@ Distributed under the [MIT License](https://choosealicense.com/licenses/mit/). S
 
 # Contact
 
-grimmigerFuchs - [grimmigerfuchs@gmail.com](mailto:grimmigerFuchs)
+grimmigerFuchs - [grimmigerfuchs@gmail.com](mailto:grimmigerFuchs)\
 Project Link: [https://github.com/grimmigerFuchs/Pyticles](https://github.com/grimmigerFuchs/Pyticles)
