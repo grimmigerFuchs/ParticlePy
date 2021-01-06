@@ -56,7 +56,8 @@ particles.create(pt.particle.Circle(position=pygame.mouse.get_pos(),            
                                     radius=random.randint(2, 25),                                   # size of particles
                                     delta_radius=random.uniform(0.035, 0.050),                      # decreases size every frame
                                     color=random.randint(210, 255),                                 # rgb or greyscale color
-                                    alpha=255))                                                     # optional transparency
+                                    alpha=255,                                                      # optional transparency; should not be used with aa
+                                    antialiasing=True))                                             # aa normally turned off
 ```
 
 ### Rectangle

@@ -24,12 +24,15 @@ class BaseParticle:
 
 
 class Circle(BaseParticle):
-    def __init__(self, position, velocity, radius: float, delta_radius: float, color, alpha: int = 255):
+    def __init__(self, position, velocity, radius: float, delta_radius: float, color, alpha: int = 255, antialiasing: bool = False):
         super().__init__(position, velocity, color, alpha)
 
         # radius
         self.radius = radius
         self.delta_radius = delta_radius
+
+        # antialiasing
+        self.antialiasing = antialiasing
 
     def update(self, delta_time: float = 1, gravity: float = 0):
         super().update(delta_time, gravity)
@@ -39,6 +42,8 @@ class Circle(BaseParticle):
 
     def draw(self, surface):
         if self.alive:
+            if self.antialiasing:
+                pygame.gfxdraw.aacircle(surface, int(self.position[0]), int(self.position[1]), int(self.radius), self.color)
             pygame.gfxdraw.filled_circle(surface, int(self.position[0]), int(self.position[1]), int(self.radius), self.color)
 
 
