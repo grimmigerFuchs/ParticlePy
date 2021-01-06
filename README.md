@@ -22,7 +22,7 @@
 
 # Usage
 
-This is a short example of how to use this library. Others can be found in the examples folder.
+This is a short example of how to use this library. Others can be found in the [`examples`](examples) folder.
 
 ## Needed variables / instances
 
@@ -62,7 +62,7 @@ for particle in particles:
 
 The shown code was taken from the example program [`examples/example.py`](examples/example.py).
 
-![Gif of example program](https://media.giphy.com/media/uz3Ypx10Ib9C8amkfc/giphy.gif)
+![Gif of example program being executed](https://media.giphy.com/media/uz3Ypx10Ib9C8amkfc/giphy.gif)
 
 # License
 
