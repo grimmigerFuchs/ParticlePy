@@ -22,7 +22,7 @@ FPS = 60
 old_time = time.time()
 
 # instances
-particles = pt.particle.ParticleSystem(remove_particle_if_not_alive=False)  # particle system
+particles = pt.particle.ParticleSystem(remove_particle_if_not_alive=True)  # particle system; argument: no batched removals
 
 # how much particles get spawned at creation
 SPAWN_TIMES = 1
@@ -49,15 +49,16 @@ while True:
                                                 velocity=(random.uniform(0, 1) * random.choice((-1, 1)), -3),   # x and y velocity
                                                 radius=random.randint(2, 25),                                   # size of particles
                                                 delta_radius=random.uniform(0.035, 0.050),                      # decreases size every frame
-                                                color=random.randint(210, 255)))                                # rgb or greyscale color
-
-            # rectangle
+                                                color=random.randint(210, 255),                                 # rgb or greyscale color
+                                                alpha=255))                                                     # transparency optional
             """
+            # rectangle
             particles.create(pt.particle.Rect(position=pygame.mouse.get_pos(),
                                               velocity=(random.uniform(0, 1) * random.choice((-1, 1)), -3),
-                                              size=random.randint(2, 25),                                   # int or tuple
-                                              delta_size=random.uniform(0.035, 0.050),                      # int or tuple
-                                              color=random.randint(210, 255)))
+                                              size=random.randint(2, 25),                                       # int or tuple
+                                              delta_size=random.uniform(0.035, 0.050),                          # int or tuple
+                                              color=random.randint(210, 255),
+                                              alpha=255))
             """
 
     # draw green point at mouse position

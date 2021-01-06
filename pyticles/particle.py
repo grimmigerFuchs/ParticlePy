@@ -1,16 +1,20 @@
 import pygame
+import pygame.gfxdraw
 
 
+# PARTICLES
 class BaseParticle:
-    def __init__(self, position: tuple or list, velocity: tuple or list, color: int or tuple or list):
+    def __init__(self, position: tuple or list, velocity: tuple or list, color: int or tuple or list, alpha: int):
         self.position = list(position)
         self.velocity = list(velocity)
 
         self.alive = True
 
         # color
-        if isinstance(color, int): self.color = color, color, color
-        elif isinstance(color, tuple) or isinstance(color, list): self.color = color
+        if isinstance(color, int):
+            self.color = color, color, color, alpha
+        elif isinstance(color, tuple) or isinstance(color, list):
+            self.color = color[0], color[1], color[2], alpha
 
     def update(self, delta_time: float = 1, gravity: float = 0):
         # manipulate positions
@@ -20,8 +24,8 @@ class BaseParticle:
 
 
 class Circle(BaseParticle):
-    def __init__(self, position, velocity, radius: float, delta_radius: float, color):
-        super().__init__(position, velocity, color)
+    def __init__(self, position, velocity, radius: float, delta_radius: float, color, alpha: int = 255):
+        super().__init__(position, velocity, color, alpha)
 
         # radius
         self.radius = radius
@@ -34,16 +38,19 @@ class Circle(BaseParticle):
         if self.radius <= 0: self.alive = False  # check if alive
 
     def draw(self, surface):
-        if self.alive: pygame.draw.circle(surface, self.color, self.position, self.radius)
+        if self.alive:
+            pygame.gfxdraw.filled_circle(surface, int(self.position[0]), int(self.position[1]), int(self.radius), self.color)
 
 
 class Rect(BaseParticle):
-    def __init__(self, position, velocity, size: float or tuple or list, delta_size: float or tuple or list, color):
-        super().__init__(position, velocity, color)
+    def __init__(self, position, velocity, size: float or tuple or list, delta_size: float or tuple or list, color, alpha):
+        super().__init__(position, velocity, color, alpha)
 
         # size
-        if isinstance(size, float) or isinstance(size, int): self.size = [size, size]
-        elif isinstance(size, tuple) or isinstance(size, list): self.size = list(size)
+        if isinstance(size, float) or isinstance(size, int):
+            self.size = [size, size]
+        elif isinstance(size, tuple) or isinstance(size, list):
+            self.size = list(size)
         self.delta_size = delta_size
 
     def update(self, delta_time: float = 1, gravity: float = 0):
@@ -63,9 +70,11 @@ class Rect(BaseParticle):
 
     def draw(self, surface):
         if self.alive:
-            pygame.draw.rect(surface, self.color, (self.position[0] - self.size[0] / 2, self.position[1] - self.size[1] / 2, self.size[0], self.size[1]))
+            pygame.gfxdraw.box(surface, (self.position[0] - self.size[0] / 2, self.position[1] - self.size[1] / 2,
+                                         self.size[0], self.size[1]), self.color)
 
 
+# PARTICLE SYSTEM
 class ParticleSystem:
     def __init__(self, remove_particle_if_not_alive: bool = False):
         # options
@@ -97,7 +106,8 @@ class ParticleSystem:
                 self.particles.remove(removes[i])
         else:
             for particle in self.particles:
-                if not particle.alive: alive = False
+                if not particle.alive:
+                    alive = False
                 else:
                     alive = True
                     break
