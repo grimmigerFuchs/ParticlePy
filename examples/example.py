@@ -4,7 +4,7 @@ import contextlib
 import sys
 import time
 import random
-import pyticles
+import pyticles as pt
 
 with contextlib.redirect_stdout(None):  # mute pygame import message
     import pygame
@@ -23,7 +23,7 @@ old_time = time.time()
 
 # instances
 particles = []  # particle list
-shape = pyticles.Shape()  # instance of possible shapes
+shapes = pt.appearance.Shapes()  # instance of possible shapes
 
 spawn_times = 1  # how much particles get spawned at creation
 
@@ -43,13 +43,13 @@ while True:
     # instantiate particles
     if pygame.mouse.get_pressed(3)[0]:  # instantiate when left mouse button is pressed
         for i in range(spawn_times):
-            particles.append(pyticles.Particle(position=pygame.mouse.get_pos(),         # get mouse pos
-                                               velocity=(random.uniform(-1, 1), -3),    # choose random x-velocity
-                                               gravity=0.009,                           # lets particles fall down
-                                               radius=random.randint(2, 25),            # random radius
-                                               delta_radius=0.048,                      # value to decrease radius every frame
-                                               color=random.randint(210, 255),          # rgb or greyscale
-                                               shape=shape.circle))                     # using instanced shape class as guide for shapes
+            particles.append(pt.particle.Particle(position=pygame.mouse.get_pos(),          # get mouse pos
+                                                  velocity=(random.uniform(-1, 1), -3),     # choose random x-velocity
+                                                  gravity=0.009,                            # lets particles fall down
+                                                  radius=random.randint(2, 25),             # random radius
+                                                  delta_radius=0.048,                       # value to decrease radius every frame
+                                                  color=random.randint(210, 255),           # rgb or greyscale
+                                                  shape=shapes.circle))                     # using instanced shape class as guide for shapes
 
     # draw green point at mouse position
     pygame.draw.circle(screen, (25, 225, 25), pygame.mouse.get_pos(), 5)
