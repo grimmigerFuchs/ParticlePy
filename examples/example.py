@@ -22,10 +22,11 @@ FPS = 60
 old_time = time.time()
 
 # instances
-particles = []  # particle list
-shapes = pt.appearance.Shapes()  # instance of possible shapes
+particles = pt.particle.ParticleSystem(remove_particle_if_not_alive=False)  # particle system
 
-spawn_times = 1  # how much particles get spawned at creation
+# how much particles get spawned at creation
+SPAWN_TIMES = 1
+GRAVITY = 0.009
 
 # main loop
 while True:
@@ -42,32 +43,33 @@ while True:
 
     # instantiate particles
     if pygame.mouse.get_pressed(3)[0]:  # instantiate when left mouse button is pressed
-        for i in range(spawn_times):
-            particles.append(pt.particle.Particle(position=pygame.mouse.get_pos(),          # get mouse pos
-                                                  velocity=(random.uniform(-1, 1), -3),     # choose random x-velocity
-                                                  gravity=0.009,                            # lets particles fall down
-                                                  radius=random.randint(2, 25),             # random radius
-                                                  delta_radius=0.048,                       # value to decrease radius every frame
-                                                  color=random.randint(210, 255),           # rgb or greyscale
-                                                  shape=shapes.circle))                     # using instanced shape class as guide for shapes
+        for i in range(SPAWN_TIMES):
+            # circle
+            particles.create(pt.particle.Circle(position=pygame.mouse.get_pos(),                                # get mouse pos
+                                                velocity=(random.uniform(0, 1) * random.choice((-1, 1)), -3),   # x and y velocity
+                                                radius=random.randint(2, 25),                                   # size of particles
+                                                delta_radius=random.uniform(0.030, 0.050),                      # decreases size every frame
+                                                color=random.randint(210, 255)))                                # rgb or greyscale color
+
+            # rectangle
+            """
+            particles.create(pt.particle.Rect(position=pygame.mouse.get_pos(),
+                                              velocity=(random.uniform(0, 1) * random.choice((-1, 1)), -3),
+                                              size=random.randint(2, 25),                                   # int or tuple
+                                              delta_size=random.uniform(0.030, 0.050),                      # int or tuple
+                                              color=random.randint(210, 255)))
+            """
 
     # draw green point at mouse position
     pygame.draw.circle(screen, (25, 225, 25), pygame.mouse.get_pos(), 5)
 
-    removes = []  # list of particles to remove because of to small radius
-    for particle in particles:
-        particle.update(delta_time=delta_time)  # update particle positions and radii
-        if particle.to_remove(): removes.append(particle)  # check if radius size is invalid -> remove particle if not
-
-    # remove invalid particles
-    for i in range(len(removes)):
-        particles.remove(removes[i])
+    # update position and size
+    particles.update(delta_time=delta_time, gravity=GRAVITY)  # delta time is optional; gravity pulls particles down
 
     # draw particles
-    for particle in particles:
-        particle.draw(screen)  # draw particles on given surface
+    particles.draw(surface=screen)  # draw particles on given surface
 
-    print(f"Particles : {len(particles)}")  # how much particles on screen
+    print(f"Particles in system : {len(particles.particles)}")  # how much particles in particle system
 
     # refresh window
     pygame.display.update()

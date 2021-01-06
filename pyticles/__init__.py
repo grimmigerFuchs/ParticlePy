@@ -10,4 +10,3 @@ import pygame
 
 # pyticles
 import pyticles.particle
-import pyticles.appearance

@@ -9,7 +9,7 @@
 
 ## Dependencies
 
-- Pygame
+- Pygame ~= 2.0.1
 
 ## Manually
 
@@ -28,7 +28,8 @@
 
 # Usage
 
-This is a short example of how to use this library. Others can be found in the [`examples`](examples) folder.
+This is a short example of how to use this library. Others can be found in the [`examples`](examples) folder.\
+Note the standard FPS in the example was set to 60.
 
 ## Imports
 
@@ -38,40 +39,43 @@ import pyticles as pt
 import random
 ```
 
-## Needed variables / instances
+## Needed classes
 
 ```python
-particles = []  # particles are instantiated in here
-shape = pt.appearance.Shapes()  # variables of the class Shape are being passed into the "shape" argument of Particle
+# particle system with grouped functions
+particles = pt.particle.ParticleSystem(remove_particle_if_not_alive=False)  # removes particles not independently if False
 ```
 
 ## Particle creation
 
+### Circle
+
 ```python
-particles.append(pt.particle.Particle(position=pygame.mouse.get_pos(),         # get mouse pos
-                                      velocity=(random.uniform(-1, 1), -3),    # x and y velocity
-                                      gravity=0.009,                           # gravity pulls particles down
-                                      radius=random.randint(2, 25),            # size of particles
-                                      delta_radius=0.048,                      # decreases radius every frame
-                                      color=random.randint(210, 255),          # rgb or greyscale color
-                                      shape=shape.circle))                     # shapes: circle or rect
+particles.create(pt.particle.Circle(position=pygame.mouse.get_pos(),                                # get mouse pos
+                                    velocity=(random.uniform(0, 1) * random.choice((-1, 1)), -3),   # x and y velocity
+                                    radius=random.randint(2, 25),                                   # size of particles
+                                    delta_radius=random.uniform(0.030, 0.050),                      # decreases size every frame
+                                    color=random.randint(210, 255)))                                # rgb or greyscale color
 ```
 
-## Updating positions and drawing the particles
+### Rectangle
 
 ```python
-removes = []  # list of particles to remove because of to small radius
-for particle in particles:
-    particle.update(delta_time=delta_time)  # update particle positions and radii; delta time is optional
-if particle.to_remove(): removes.append(particle)  # check if radius size is valid -> remove particle if not
+particles.create(pt.particle.Rect(position=pygame.mouse.get_pos(),
+                                  velocity=(random.uniform(0, 1) * random.choice((-1, 1)), -3),
+                                  size=random.randint(2, 25),                                       # int or tuple
+                                  delta_size=random.uniform(0.030, 0.050),                          # int or tuple
+                                  color=random.randint(210, 255)))
+```
 
-# remove invalid particles
-for i in range(len(removes)):
-    particles.remove(removes[i])
+## Updating positions and drawing the particles with particle systems
+
+```python
+# update position and size
+particles.update(delta_time=delta_time, gravity=0.009)  # both arguments are optional; gravity pulls particles down
 
 # draw particles
-for particle in particles:
-    particle.draw(screen)
+particles.draw(surface=screen)  # draw particles on given surface
 ```
 
 The shown code was taken from the example program [`examples/example.py`](examples/example.py).
