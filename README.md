@@ -80,7 +80,7 @@ particles.draw(surface=screen)  # draw particles on given surface
 
 The shown code was taken from the example program [`examples/example.py`](examples/example.py).
 
-![Gif of example program being executed](https://media.giphy.com/media/uz3Ypx10Ib9C8amkfc/giphy.gif)
+![Gif of example program being executed](https://media.giphy.com/media/961YhKg8e59t0Y9eUu/giphy.gif)
 
 # License
 
