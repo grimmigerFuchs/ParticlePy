@@ -55,7 +55,8 @@ particles.create(pt.particle.Circle(position=pygame.mouse.get_pos(),            
                                     velocity=(random.uniform(0, 1) * random.choice((-1, 1)), -3),   # x and y velocity
                                     radius=random.randint(2, 25),                                   # size of particles
                                     delta_radius=random.uniform(0.035, 0.050),                      # decreases size every frame
-                                    color=random.randint(210, 255)))                                # rgb or greyscale color
+                                    color=random.randint(210, 255),                                 # rgb or greyscale color
+                                    alpha=255))                                                     # optional transparency
 ```
 
 ### Rectangle
@@ -65,7 +66,8 @@ particles.create(pt.particle.Rect(position=pygame.mouse.get_pos(),
                                   velocity=(random.uniform(0, 1) * random.choice((-1, 1)), -3),
                                   size=random.randint(2, 25),                                       # int or tuple
                                   delta_size=random.uniform(0.035, 0.050),                          # int or tuple
-                                  color=random.randint(210, 255)))
+                                  color=random.randint(210, 255),
+                                  alpha=255))
 ```
 
 ## Updating positions and drawing the particles with particle systems
@@ -84,7 +86,7 @@ The shown code was taken from the example program [`examples/example.py`](exampl
 
 # License
 
-Distributed under the [MIT License](https://choosealicense.com/licenses/mit/). See [`LICENSE`](LICENSE) for mor
+Distributed under the [MIT License](https://choosealicense.com/licenses/mit/). See [`LICENSE`](LICENSE) for more
 information.
 
 # Contact
