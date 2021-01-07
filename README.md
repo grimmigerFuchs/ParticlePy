@@ -1,5 +1,5 @@
 <p align="center">
-   <h2 align="center">Pyticles</h2>
+   <h2 align="center">ParticlePy</h2>
    <p align="center">
       A short library for easy to use particles in Pygame based on <a href="http://dafluffypotato.com/" target="blank">DaFluffyPotato's</a> particle system.
    </p>
@@ -15,11 +15,11 @@
 
 1. Clone the repo
    ```bash
-    git clone https://github.com/grimmigerFuchs/Pyticles.git
+    git clone https://github.com/grimmigerFuchs/ParticlePy.git
    ```
 2. Go into the directory
    ```bash
-   cd Pyticles/
+   cd ParticlePy/
    ```
 3. Run `setup.py`
    ```bash
@@ -35,7 +35,7 @@ Note the standard FPS in the example was set to 60.
 
 ```python
 import pygame
-import pyticles as pt
+import particlepy as par
 import random
 ```
 
@@ -43,7 +43,7 @@ import random
 
 ```python
 # particle system with grouped functions
-particles = pt.particle.ParticleSystem(remove_particle_if_not_alive=False)  # removes particles not independently if False
+particles = par.particle.ParticleSystem(remove_particle_if_not_alive=False)  # removes particles not independently if False
 ```
 
 ## Particle creation
@@ -51,24 +51,24 @@ particles = pt.particle.ParticleSystem(remove_particle_if_not_alive=False)  # re
 ### Circle
 
 ```python
-particles.create(pt.particle.Circle(position=pygame.mouse.get_pos(),                                # get mouse pos
-                                    velocity=(random.uniform(0, 1) * random.choice((-1, 1)), -3),   # x and y velocity
-                                    radius=random.randint(2, 25),                                   # size of particles
-                                    delta_radius=random.uniform(0.035, 0.050),                      # decreases size every frame
-                                    color=random.randint(210, 255),                                 # rgb(a) or greyscale color
-                                    alpha=255,                                                      # optional transparency -> rgba; should not be used with aa
-                                    antialiasing=True))                                             # aa normally turned off
+particles.create(par.particle.Circle(position=pygame.mouse.get_pos(),                                # get mouse pos
+                                     velocity=(random.uniform(0, 1) * random.choice((-1, 1)), -3),   # x and y velocity
+                                     radius=random.randint(2, 25),                                   # size of particles
+                                     delta_radius=random.uniform(0.035, 0.050),                      # decreases size every frame
+                                     color=random.randint(210, 255),                                 # rgb(a) or greyscale color
+                                     alpha=255,                                                      # optional transparency -> rgba; should not be used with aa
+                                     antialiasing=True))                                             # aa normally turned off
 ```
 
 ### Rectangle
 
 ```python
-particles.create(pt.particle.Rect(position=pygame.mouse.get_pos(),
-                                  velocity=(random.uniform(0, 1) * random.choice((-1, 1)), -3),
-                                  size=random.randint(2, 25),                                       # int or tuple
-                                  delta_size=random.uniform(0.035, 0.050),                          # int or tuple
-                                  color=random.randint(210, 255),
-                                  alpha=255))
+particles.create(par.particle.Rect(position=pygame.mouse.get_pos(),
+                                   velocity=(random.uniform(0, 1) * random.choice((-1, 1)), -3),
+                                   size=random.randint(2, 25),                                       # int or tuple
+                                   delta_size=random.uniform(0.035, 0.050),                          # int or tuple
+                                   color=random.randint(210, 255),
+                                   alpha=255))
 ```
 
 ## Updating positions and drawing the particles with particle systems

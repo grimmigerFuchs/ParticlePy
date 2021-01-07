@@ -1,5 +1,6 @@
-import pygame
-import pygame.gfxdraw
+# particle.py
+
+from pygame import gfxdraw
 
 
 # PARTICLES
@@ -45,8 +46,8 @@ class Circle(BaseParticle):
     def draw(self, surface):
         if self.alive:
             if self.antialiasing:
-                pygame.gfxdraw.aacircle(surface, int(self.position[0]), int(self.position[1]), int(self.radius), self.color)
-            pygame.gfxdraw.filled_circle(surface, int(self.position[0]), int(self.position[1]), int(self.radius), self.color)
+                gfxdraw.aacircle(surface, int(self.position[0]), int(self.position[1]), int(self.radius), self.color)
+            gfxdraw.filled_circle(surface, int(self.position[0]), int(self.position[1]), int(self.radius), self.color)
 
 
 class Rect(BaseParticle):
@@ -77,8 +78,8 @@ class Rect(BaseParticle):
 
     def draw(self, surface):
         if self.alive:
-            pygame.gfxdraw.box(surface, (self.position[0] - self.size[0] / 2, self.position[1] - self.size[1] / 2,
-                                         self.size[0], self.size[1]), self.color)
+            gfxdraw.box(surface, (self.position[0] - self.size[0] / 2, self.position[1] - self.size[1] / 2,
+                                  self.size[0], self.size[1]), self.color)
 
 
 # PARTICLE SYSTEM
@@ -96,6 +97,7 @@ class ParticleSystem:
         self.particles.append(particle)
 
     def update(self, delta_time: float = 1, gravity: float = 0):
+        global alive
         if len(self.particles) > 0: self.alive = True
 
         removes = []

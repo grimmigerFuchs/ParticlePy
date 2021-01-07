@@ -4,7 +4,7 @@ import contextlib
 import sys
 import time
 import random
-import pyticles as pt
+import particlepy as par
 
 with contextlib.redirect_stdout(None):  # mute pygame import message
     import pygame
@@ -22,7 +22,7 @@ FPS = 60
 old_time = time.time()
 
 # instances
-particles = pt.particle.ParticleSystem(remove_particle_if_not_alive=True)  # particle system; argument: no batched removals
+particles = par.particle.ParticleSystem(remove_particle_if_not_alive=True)  # particle system; argument: no batched removals
 
 # how much particles get spawned at creation
 SPAWN_TIMES = 1
@@ -45,21 +45,21 @@ while True:
     if pygame.mouse.get_pressed(3)[0]:  # instantiate when left mouse button is pressed
         for i in range(SPAWN_TIMES):
             # circle
-            particles.create(pt.particle.Circle(position=pygame.mouse.get_pos(),                                # get mouse pos
-                                                velocity=(random.uniform(0, 1) * random.choice((-1, 1)), -3),   # x and y velocity
-                                                radius=random.randint(2, 25),                                   # size of particles
-                                                delta_radius=random.uniform(0.035, 0.050),                      # decreases size every frame
-                                                color=random.randint(210, 255),                                 # rgb(a) or greyscale color
-                                                alpha=255,                                                      # transparency optional; should not be used with aa
-                                                antialiasing=True))                                             # aa normally turned off
+            particles.create(par.particle.Circle(position=pygame.mouse.get_pos(),                               # get mouse pos
+                                                 velocity=(random.uniform(0, 1) * random.choice((-1, 1)), -3),  # x and y velocity
+                                                 radius=random.randint(2, 25),                                  # size of particles
+                                                 delta_radius=random.uniform(0.035, 0.050),                     # decreases size every frame
+                                                 color=random.randint(210, 255),                                # rgb(a) or greyscale color
+                                                 alpha=255,                                                     # transparency optional -> rgb(a); should not be used with aa
+                                                 antialiasing=True))                                            # aa normally turned off
             """
             # rectangle
-            particles.create(pt.particle.Rect(position=pygame.mouse.get_pos(),
-                                              velocity=(random.uniform(0, 1) * random.choice((-1, 1)), -3),
-                                              size=random.randint(2, 25),                                       # int or tuple
-                                              delta_size=random.uniform(0.035, 0.050),                          # int or tuple
-                                              color=random.randint(210, 255),
-                                              alpha=255))
+            particles.create(par.particle.Rect(position=pygame.mouse.get_pos(),
+                                               velocity=(random.uniform(0, 1) * random.choice((-1, 1)), -3),
+                                               size=random.randint(2, 25),                                       # int or tuple
+                                               delta_size=random.uniform(0.035, 0.050),                          # int or tuple
+                                               color=random.randint(210, 255),
+                                               alpha=255))
             """
 
     # draw green point at mouse position
