@@ -9,7 +9,7 @@ setuptools.setup(
     name="pyticles",
     version="0.1.2",
     author="grimmigerFuchs",
-    author_email="author@example.com",
+    author_email="grimmigerfuchs@gmail.com",
     description="A short library for easy to use particles in Pygame based on DaFluffyPotato's particle system.",
     long_description=long_description,
     long_description_content_type="text/markdown",
