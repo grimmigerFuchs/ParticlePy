@@ -53,8 +53,8 @@ particles = par.particle.ParticleSystem(remove_particle_if_not_alive=False)  # r
 ```python
 particles.create(par.particle.Circle(position=pygame.mouse.get_pos(),                                # get mouse pos
                                      velocity=(random.uniform(0, 1) * random.choice((-1, 1)), -3),   # x and y velocity
-                                     radius=random.randint(2, 25),                                   # size of particles
-                                     delta_radius=random.uniform(0.035, 0.050),                      # decreases size every frame
+                                     size=random.randint(2, 25),                                     # size of particles
+                                     delta_size=random.uniform(0.035, 0.050),                        # decreases size every frame
                                      color=random.randint(210, 255),                                 # rgb(a) or greyscale color
                                      alpha=255,                                                      # optional transparency -> rgba; should not be used with aa
                                      antialiasing=True))                                             # aa normally turned off
