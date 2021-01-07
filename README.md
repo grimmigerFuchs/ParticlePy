@@ -43,7 +43,7 @@ import random
 
 ```python
 # particle system with grouped functions
-particles = par.particle.ParticleSystem(remove_particle_if_not_alive=False)  # removes particles not independently if False
+particles = par.particle.ParticleSystem(remove_particles_batched=False)  # particle system; argument: no batched removals
 ```
 
 ## Particle creation

@@ -119,9 +119,9 @@ class Rect(BaseParticle):
 
 # PARTICLE SYSTEM
 class ParticleSystem:
-    def __init__(self, remove_particle_if_not_alive: bool = False):
+    def __init__(self, remove_particles_batched: bool = False):
         # options
-        self.remove_particle_if_not_alive = remove_particle_if_not_alive
+        self.remove_particles_batched = remove_particles_batched
 
         # particles
         self.particles = []
@@ -137,18 +137,19 @@ class ParticleSystem:
         if len(self.particles) > 0: self.alive = True
 
         removes = []
-        if not self.remove_particle_if_not_alive: alive = True
+        if self.remove_particles_batched: alive = True
 
         for particle in self.particles:
             particle.update(start_size=particle.start_size, size=particle.size, delta_time=delta_time, gravity=gravity)
-            if self.remove_particle_if_not_alive:
+            if not self.remove_particles_batched:
                 if not particle.alive:
                     removes.append(particle)
 
-        if self.remove_particle_if_not_alive:
+        if not self.remove_particles_batched:
             for i in range(len(removes)):
                 self.particles.remove(removes[i])
         else:
+            alive = True
             for particle in self.particles:
                 if not particle.alive:
                     alive = False

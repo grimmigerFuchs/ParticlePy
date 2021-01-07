@@ -22,7 +22,7 @@ FPS = 60
 old_time = time.time()
 
 # instances
-particles = par.particle.ParticleSystem(remove_particle_if_not_alive=True)  # particle system; argument: no batched removals
+particles = par.particle.ParticleSystem(remove_particles_batched=False)  # particle system; argument: no batched removals
 
 # how much particles get spawned at creation
 SPAWN_TIMES = 1
