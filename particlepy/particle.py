@@ -1,53 +1,87 @@
 # particle.py
 
 from pygame import gfxdraw
+from statistics import mean
+import random
 
 
+# CLASSES
 # PARTICLES
 class BaseParticle:
     def __init__(self, position: tuple or list, velocity: tuple or list, color: int or tuple or list, alpha: int):
         self.position = list(position)
         self.velocity = list(velocity)
 
+        self.progress = 0
+        self.twisted_progress = 1 - self.progress
+
         self.alive = True
 
         # color
         if isinstance(color, int):
-            self.color = color, color, color, alpha
+            self.color = [color, color, color, alpha]
         elif isinstance(color, tuple) or isinstance(color, list):
             if len(color) == 3:
-                self.color = color[0], color[1], color[2], alpha
-            else: self.color = color
+                self.color = [color[0], color[1], color[2], alpha]
+            else: self.color = list(color)
+        self.start_color = self.color
+        self.alpha = self.color[3]
+        for i in range(len(self.color)):
+            self.color[i] = int(self.color[i])
 
-    def update(self, delta_time: float = 1, gravity: float = 0):
+    @staticmethod
+    def get_progress(start_size: float or tuple or list, size: float or tuple or list):
+        try:
+            if isinstance(size, tuple) or isinstance(start_size, list):
+                return 1 - (mean(list(size)) / mean(list(start_size)))
+            else:
+                return 1 - (float(size) / float(start_size))
+        except ZeroDivisionError:
+            return 0
+
+    def update(self, start_size: float, size: float, delta_time: float = 1, gravity: float = 0):
         # manipulate positions
         self.position[0] += self.velocity[0] * delta_time
         self.position[1] += self.velocity[1] * delta_time
         self.velocity[1] += gravity
 
+        # set color
+        self.color = list(self.color)
+        if len(self.color) < 4:
+            self.color.append(self.alpha)
+        else:
+            self.color[3] = self.alpha
+        for i in range(len(self.color)):
+            self.color[i] = int(self.color[i])
+
+        # get progress of particle
+        self.progress = self.get_progress(start_size, size)
+        self.twisted_progress = 1 - self.progress
+
 
 class Circle(BaseParticle):
-    def __init__(self, position, velocity, radius: float, delta_radius: float, color, alpha: int = 255, antialiasing: bool = False):
+    def __init__(self, position, velocity, size: float, delta_size: float, color, alpha: int = 255, antialiasing: bool = False):
         super().__init__(position, velocity, color, alpha)
 
         # radius
-        self.radius = radius
-        self.delta_radius = delta_radius
+        self.size = size
+        self.start_size = self.size
+        self.delta_radius = delta_size
 
         # antialiasing
         self.antialiasing = antialiasing
 
-    def update(self, delta_time: float = 1, gravity: float = 0):
-        super().update(delta_time, gravity)
+    def update(self, start_size: float, size: float, delta_time: float = 1, gravity: float = 0):
+        super().update(start_size=start_size, size=size, delta_time=delta_time, gravity=gravity)
 
-        if self.alive: self.radius -= self.delta_radius  # decrease radius
-        if self.radius <= 0: self.alive = False  # check if alive
+        if self.alive: self.size -= self.delta_radius  # decrease radius
+        if self.size <= 0: self.alive = False  # check if alive
 
     def draw(self, surface):
         if self.alive:
             if self.antialiasing:
-                gfxdraw.aacircle(surface, int(self.position[0]), int(self.position[1]), int(self.radius), self.color)
-            gfxdraw.filled_circle(surface, int(self.position[0]), int(self.position[1]), int(self.radius), self.color)
+                gfxdraw.aacircle(surface, int(self.position[0]), int(self.position[1]), int(self.size), self.color)
+            gfxdraw.filled_circle(surface, int(self.position[0]), int(self.position[1]), int(self.size), self.color)
 
 
 class Rect(BaseParticle):
@@ -57,11 +91,12 @@ class Rect(BaseParticle):
         # size
         if isinstance(size, float) or isinstance(size, int):
             self.size = [size, size]
-        elif isinstance(size, tuple) or isinstance(size, list):
+        else:
             self.size = list(size)
+        self.start_size = self.size
         self.delta_size = delta_size
 
-    def update(self, delta_time: float = 1, gravity: float = 0):
+    def update(self, start_size: float, size: float, delta_time: float = 1, gravity: float = 0):
         super().update(delta_time, gravity)
 
         # decrease size
@@ -97,14 +132,15 @@ class ParticleSystem:
         self.particles.append(particle)
 
     def update(self, delta_time: float = 1, gravity: float = 0):
-        global alive
+        random.seed()
+
         if len(self.particles) > 0: self.alive = True
 
         removes = []
         if not self.remove_particle_if_not_alive: alive = True
 
         for particle in self.particles:
-            particle.update(delta_time, gravity)
+            particle.update(start_size=particle.start_size, size=particle.size, delta_time=delta_time, gravity=gravity)
             if self.remove_particle_if_not_alive:
                 if not particle.alive:
                     removes.append(particle)

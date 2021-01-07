@@ -10,3 +10,4 @@ import pygame
 
 # particlepy
 import particlepy.particle
+import particlepy.math
