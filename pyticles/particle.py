@@ -14,7 +14,9 @@ class BaseParticle:
         if isinstance(color, int):
             self.color = color, color, color, alpha
         elif isinstance(color, tuple) or isinstance(color, list):
-            self.color = color[0], color[1], color[2], alpha
+            if len(color) == 3:
+                self.color = color[0], color[1], color[2], alpha
+            else: self.color = color
 
     def update(self, delta_time: float = 1, gravity: float = 0):
         # manipulate positions
@@ -92,7 +94,6 @@ class ParticleSystem:
 
     def create(self, particle: BaseParticle):
         self.particles.append(particle)
-        if not isinstance(particle, BaseParticle): print("not!")
 
     def update(self, delta_time: float = 1, gravity: float = 0):
         if len(self.particles) > 0: self.alive = True
