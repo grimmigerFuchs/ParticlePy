@@ -14,7 +14,7 @@
 ## Pip
 
 ```bash
-python -m pip install git+https://github.com/grimmigerfuchs/particlepy.git
+python -m pip install git+https://github.com/grimmigerFuchs/ParticlePy.git
 ```
 
 ## Manually
