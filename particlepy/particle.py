@@ -1,8 +1,10 @@
 # particle.py
 
-from pygame import gfxdraw
+from contextlib import redirect_stdout
 from statistics import mean
 import random
+with redirect_stdout(None):
+    from pygame import gfxdraw
 
 
 # CLASSES

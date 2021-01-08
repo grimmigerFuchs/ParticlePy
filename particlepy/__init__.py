@@ -5,8 +5,10 @@ __credits__ = [__author__, "DaFluffyPotato"]
 __version__ = "0.1.2"
 
 
+from contextlib import redirect_stdout
 import math
-import pygame
+with redirect_stdout(None):
+    import pygame
 
 # particlepy
 import particlepy.particle
