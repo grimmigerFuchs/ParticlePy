@@ -57,6 +57,12 @@ class BaseParticle:
         self.progress = self.get_progress(start_size, size)
         self.twisted_progress = 1 - self.progress
 
+    # fading
+    def fade_to_color(self, wanted_color):
+        self.color = (self.start_color[0] + (wanted_color[0] - self.start_color[0]) * self.twisted_progress,
+                      self.start_color[1] + (wanted_color[1] - self.start_color[1]) * self.twisted_progress,
+                      self.start_color[2] + (wanted_color[2] - self.start_color[2]) * self.twisted_progress)
+
 
 class Circle(BaseParticle):
     def __init__(self, position, velocity, size: float, delta_size: float, color, alpha: int = 255, antialiasing: bool = False):

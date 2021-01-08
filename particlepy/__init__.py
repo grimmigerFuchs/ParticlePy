@@ -11,4 +11,3 @@ with redirect_stdout(None):
 
 # particlepy
 import particlepy.particle
-import particlepy.math
