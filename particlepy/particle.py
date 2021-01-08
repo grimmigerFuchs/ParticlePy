@@ -19,15 +19,21 @@ class BaseParticle:
 
         self.alive = True
 
-        # color
+        # COLOR
+        # check for type
         if isinstance(color, int):
             self.color = [color, color, color, alpha]
         elif isinstance(color, tuple) or isinstance(color, list):
             if len(color) == 3:
                 self.color = [color[0], color[1], color[2], alpha]
             else: self.color = list(color)
+
+        # define
         self.start_color = self.color
         self.alpha = self.color[3]
+        self.start_alpha = self.alpha
+
+        # correct color
         for i in range(len(self.color)):
             self.color[i] = int(self.color[i])
 
@@ -62,6 +68,9 @@ class BaseParticle:
         self.color = (self.start_color[0] + (wanted_color[0] - self.start_color[0]) * self.twisted_progress,
                       self.start_color[1] + (wanted_color[1] - self.start_color[1]) * self.twisted_progress,
                       self.start_color[2] + (wanted_color[2] - self.start_color[2]) * self.twisted_progress)
+
+    def fade_alpha(self, wanted_alpha):
+        self.alpha = self.start_alpha + (wanted_alpha - self.start_alpha) * self.twisted_progress
 
 
 class Circle(BaseParticle):
