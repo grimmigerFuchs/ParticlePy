@@ -25,7 +25,7 @@ old_time = time.time()
 particles = par.particle.ParticleSystem(remove_particles_batched=False)  # particle system; argument: no batched removals
 
 # how much particles get spawned at creation
-SPAWN_TIMES = 1
+SPAWN_TIMES = 3
 GRAVITY = 0.009
 
 # main loop
@@ -45,13 +45,13 @@ while True:
     if pygame.mouse.get_pressed(3)[0]:  # instantiate when left mouse button is pressed
         for i in range(SPAWN_TIMES):
             # circle
-            particles.create(par.particle.Circle(position=pygame.mouse.get_pos(),                               # get mouse pos
-                                                 velocity=(random.uniform(0, 1) * random.choice((-1, 1)), -3),  # x and y velocity
-                                                 size=random.randint(2, 25),                                    # size of particles
-                                                 delta_size=random.uniform(0.035, 0.050),                       # decreases size every frame
-                                                 color=random.randint(210, 255),                                # rgb(a) or greyscale color
-                                                 alpha=255,                                                     # transparency optional -> rgb(a); should not be used with aa
-                                                 antialiasing=True))                                            # aa normally turned off
+            particles.create(par.particle.Circle(position=pygame.mouse.get_pos(),                                   # get mouse pos
+                                                 velocity=(random.uniform(0, 1.5) * random.choice((-1, 1)), -3.5),  # x and y velocity
+                                                 size=random.randint(2, 20),                                        # size of particles
+                                                 delta_size=random.uniform(0.1, 0.12),                              # decreases size every frame
+                                                 color=random.randint(210, 255),                                    # rgb(a) or greyscale color
+                                                 alpha=255,                                                         # transparency optional -> rgb(a); should not be used with aa
+                                                 antialiasing=True))                                                # aa normally turned off
 
             # rectangle
             """
