@@ -102,7 +102,7 @@ class Rect(BaseParticle):
         self.delta_size = delta_size
 
     def update(self, start_size: float, size: float, delta_time: float = 1, gravity: float = 0):
-        super().update(delta_time, gravity)
+        super().update(start_size=start_size, size=size, delta_time=delta_time, gravity=gravity)
 
         # decrease size
         if self.alive:
