@@ -10,7 +10,7 @@ with redirect_stdout(None):
 # CLASSES
 # PARTICLES
 class BaseParticle:
-    def __init__(self, position: tuple or list, velocity: tuple or list, color: int or tuple or list, alpha: int):
+    def __init__(self, position: tuple or list, velocity: tuple or list, color: int or tuple or list, alpha: int = 255):
         self.position = list(position)
         self.velocity = list(velocity)
 
@@ -60,7 +60,7 @@ class BaseParticle:
 
 class Circle(BaseParticle):
     def __init__(self, position, velocity, size: float, delta_size: float, color, alpha: int = 255, antialiasing: bool = False):
-        super().__init__(position, velocity, color, alpha)
+        super().__init__(position, velocity, color, alpha=255)
 
         # radius
         self.size = size
@@ -84,8 +84,8 @@ class Circle(BaseParticle):
 
 
 class Rect(BaseParticle):
-    def __init__(self, position, velocity, size: float, delta_size: float, color, alpha):
-        super().__init__(position, velocity, color, alpha)
+    def __init__(self, position, velocity, size: float, delta_size: float, color, alpha: int = 255):
+        super().__init__(position, velocity, color, alpha=255)
 
         # size
         if isinstance(size, float) or isinstance(size, int):
