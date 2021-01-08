@@ -58,7 +58,7 @@ class BaseParticle:
         self.twisted_progress = 1 - self.progress
 
     # fading
-    def fade_to_color(self, wanted_color):
+    def fade_color(self, wanted_color):
         self.color = (self.start_color[0] + (wanted_color[0] - self.start_color[0]) * self.twisted_progress,
                       self.start_color[1] + (wanted_color[1] - self.start_color[1]) * self.twisted_progress,
                       self.start_color[2] + (wanted_color[2] - self.start_color[2]) * self.twisted_progress)
