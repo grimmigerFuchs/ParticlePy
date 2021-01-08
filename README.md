@@ -63,10 +63,11 @@ particles.create(par.particle.Circle(position=pygame.mouse.get_pos(),           
 ### Rectangle
 
 ```python
+# almost same as circles but for rects aa is not an option
 particles.create(par.particle.Rect(position=pygame.mouse.get_pos(),
                                    velocity=(random.uniform(0, 1) * random.choice((-1, 1)), -3),
-                                   size=random.randint(2, 25),                                       # int or tuple
-                                   delta_size=random.uniform(0.035, 0.050),                          # int or tuple
+                                   size=random.randint(2, 25),
+                                   delta_size=random.uniform(0.035, 0.050),
                                    color=random.randint(210, 255),
                                    alpha=255))
 ```

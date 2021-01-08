@@ -36,13 +36,7 @@ class BaseParticle:
 
     @staticmethod
     def get_progress(start_size: float or tuple or list, size: float or tuple or list):
-        try:
-            if isinstance(size, tuple) or isinstance(start_size, list):
-                return 1 - (mean(list(size)) / mean(list(start_size)))
-            else:
-                return 1 - (float(size) / float(start_size))
-        except ZeroDivisionError:
-            return 0
+        return size / start_size
 
     def update(self, start_size: float, size: float, delta_time: float = 1, gravity: float = 0):
         # manipulate positions
@@ -90,14 +84,12 @@ class Circle(BaseParticle):
 
 
 class Rect(BaseParticle):
-    def __init__(self, position, velocity, size: float or tuple or list, delta_size: float or tuple or list, color, alpha):
+    def __init__(self, position, velocity, size: float, delta_size: float, color, alpha):
         super().__init__(position, velocity, color, alpha)
 
         # size
         if isinstance(size, float) or isinstance(size, int):
-            self.size = [size, size]
-        else:
-            self.size = list(size)
+            self.size = size
         self.start_size = self.size
         self.delta_size = delta_size
 
@@ -105,21 +97,15 @@ class Rect(BaseParticle):
         super().update(start_size=start_size, size=size, delta_time=delta_time, gravity=gravity)
 
         # decrease size
-        if self.alive:
-            if isinstance(self.delta_size, float):
-                self.size[0] -= self.delta_size
-                self.size[1] -= self.delta_size
-            elif isinstance(self.delta_size, tuple) or isinstance(self.delta_size, list):
-                self.size[0] -= self.delta_size[0]
-                self.size[1] -= self.delta_size[1]
+        if self.alive: self.size -= self.delta_size
 
-        if self.size[0] <= 0 or self.size[1] <= 0:
-            self.alive = False
+        # check if alive
+        if self.size <= 0: self.alive = False
 
     def draw(self, surface):
         if self.alive:
-            gfxdraw.box(surface, (self.position[0] - self.size[0] / 2, self.position[1] - self.size[1] / 2,
-                                  self.size[0], self.size[1]), self.color)
+            gfxdraw.box(surface, (self.position[0] - self.size / 2, self.position[1] - self.size / 2,
+                                  self.size, self.size), self.color)
 
 
 # PARTICLE SYSTEM
