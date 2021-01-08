@@ -6,7 +6,6 @@ __version__ = "0.1.2"
 
 
 from contextlib import redirect_stdout
-import math
 with redirect_stdout(None):
     import pygame
 

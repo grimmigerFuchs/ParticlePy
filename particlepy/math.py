@@ -1,7 +1,6 @@
 # math.py
 
 import particlepy.particle
-import math
 
 
 def fade_to_color(particle: particlepy.particle.BaseParticle, wanted_color):
