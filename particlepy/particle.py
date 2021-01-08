@@ -29,6 +29,9 @@ class BaseParticle:
         for i in range(len(self.color)):
             self.color[i] = int(self.color[i])
 
+    def kill(self):
+        self.alive = False
+
     @staticmethod
     def get_progress(start_size: float or tuple or list, size: float or tuple or list):
         try:
@@ -131,6 +134,10 @@ class ParticleSystem:
     def create(self, particle: BaseParticle):
         self.particles.append(particle)
 
+    def kill(self):
+        self.particles.clear()
+        self.alive = False
+
     def update(self, delta_time: float = 1, gravity: float = 0):
         random.seed()
 
@@ -149,14 +156,14 @@ class ParticleSystem:
             for i in range(len(removes)):
                 self.particles.remove(removes[i])
         else:
-            alive = True
+            self.alive = True
             for particle in self.particles:
                 if not particle.alive:
-                    alive = False
+                    self.alive = False
                 else:
-                    alive = True
+                    self.alive = True
                     break
-            if not alive:
+            if not self.alive:
                 self.particles.clear()
                 self.alive = False
 
