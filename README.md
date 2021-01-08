@@ -11,6 +11,12 @@
 
 - Pygame ~= 2.0.1
 
+## Pip
+
+```bash
+python -m pip install git+https://github.com/grimmigerfuchs/particlepy.git
+```
+
 ## Manually
 
 1. Clone the repo
@@ -23,7 +29,7 @@
    ```
 3. Run `setup.py`
    ```bash
-   python3 setup.py install
+   python setup.py install
    ```
 
 # Usage
