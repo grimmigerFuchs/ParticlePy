@@ -25,7 +25,7 @@ old_time = time.time()
 particles = par.particle.ParticleSystem(remove_particles_batched=False)  # particle system; argument: no batched removals
 
 # how much particles get spawned at creation
-SPAWN_TIMES = 4
+SPAWN_TIMES = 1
 GRAVITY = 0.04
 
 # main loop
@@ -46,21 +46,19 @@ while True:
         for i in range(SPAWN_TIMES):
             # circle
             particles.create(par.particle.Circle(position=pygame.mouse.get_pos(),                                   # get mouse pos
-                                                 velocity=(random.uniform(0, 1) * random.choice((-1, 1)), -4.5),  # x and y velocity
+                                                 velocity=(random.uniform(0, 1) * random.choice((-1, 1)), -4.5),    # x and y velocity
                                                  size=random.randint(6, 14),                                        # size of particles
                                                  delta_size=random.uniform(0.05, 0.1),                              # decreases size every frame
                                                  color=random.randint(210, 255),                                    # rgb(a) or greyscale color
-                                                 alpha=255,                                                         # transparency optional -> rgb(a); should not be used with aa
                                                  antialiasing=True))                                                # aa normally turned off
 
-            # rectangle
             """
+            # rectangle
             particles.create(par.particle.Rect(position=pygame.mouse.get_pos(),
-                                               velocity=(random.uniform(0, 1) * random.choice((-1, 1)), -3),
-                                               size=random.randint(2, 25),
+                                               velocity=(random.uniform(0, 1) * random.choice((-1, 1)), -4.5),
+                                               size=random.randint(6, 14),
                                                delta_size=random.uniform(0.035, 0.050),
-                                               color=random.randint(210, 255),
-                                               alpha=255))
+                                               color=random.randint(210, 255)))
             """
 
     # draw green point at mouse position

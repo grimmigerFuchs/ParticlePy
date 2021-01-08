@@ -1,16 +1,19 @@
 # particle.py
 
 from contextlib import redirect_stdout
-from statistics import mean
+import particlepy.math
+import particlepy.lighting
 import random
+
 with redirect_stdout(None):
+    import pygame
     from pygame import gfxdraw
 
 
 # CLASSES
 # PARTICLES
 class BaseParticle:
-    def __init__(self, position: tuple or list, velocity: tuple or list, color: int or tuple or list, alpha: int = 255):
+    def __init__(self, position: tuple or list, velocity: tuple or list, color: int or tuple or list, lighting_color=None):
         self.position = list(position)
         self.velocity = list(velocity)
 
@@ -20,18 +23,15 @@ class BaseParticle:
         self.alive = True
 
         # COLOR
-        # check for type
-        if isinstance(color, int):
-            self.color = [color, color, color, alpha]
-        elif isinstance(color, tuple) or isinstance(color, list):
-            if len(color) == 3:
-                self.color = [color[0], color[1], color[2], alpha]
-            else: self.color = list(color)
+        self.color = particlepy.math.get_correct_color(color)
 
         # define
         self.start_color = self.color
         self.alpha = self.color[3]
         self.start_alpha = self.alpha
+        self.lighting_color = None
+        if lighting_color is not None and (isinstance(lighting_color, tuple) or isinstance(lighting_color, list)):
+            self.lighting_color = particlepy.math.get_correct_color(lighting_color)
 
         # correct color
         for i in range(len(self.color)):
@@ -74,8 +74,8 @@ class BaseParticle:
 
 
 class Circle(BaseParticle):
-    def __init__(self, position, velocity, size: float, delta_size: float, color, alpha: int = 255, antialiasing: bool = False):
-        super().__init__(position, velocity, color, alpha=255)
+    def __init__(self, position, velocity, size: float, delta_size: float, color, antialiasing: bool = False, lighting_color=None):
+        super().__init__(position, velocity, color, lighting_color)
 
         # radius
         self.size = size
@@ -96,11 +96,15 @@ class Circle(BaseParticle):
             if self.antialiasing:
                 gfxdraw.aacircle(surface, int(self.position[0]), int(self.position[1]), int(self.size), self.color)
             gfxdraw.filled_circle(surface, int(self.position[0]), int(self.position[1]), int(self.size), self.color)
+            if self.lighting_color is not None:
+                surface.blit(particlepy.lighting.circle_lighting_surf(self),
+                             (self.position[0] - self.size * 2, self.position[1] - self.size * 2),
+                             special_flags=pygame.BLEND_RGB_ADD)
 
 
 class Rect(BaseParticle):
-    def __init__(self, position, velocity, size: float, delta_size: float, color, alpha: int = 255):
-        super().__init__(position, velocity, color, alpha=255)
+    def __init__(self, position, velocity, size: float, delta_size: float, color, lighting_color=None):
+        super().__init__(position, velocity, color, lighting_color)
 
         # size
         if isinstance(size, float) or isinstance(size, int):
@@ -119,8 +123,14 @@ class Rect(BaseParticle):
 
     def draw(self, surface):
         if self.alive:
+            if self.lighting_color is not None:
+                self.lighting_surf = particlepy.lighting.rect_lighting_surf(particle=self)
             gfxdraw.box(surface, (self.position[0] - self.size / 2, self.position[1] - self.size / 2,
                                   self.size, self.size), self.color)
+            if self.lighting_color is not None:
+                surface.blit(particlepy.lighting.rect_lighting_surf(self),
+                             (self.position[0] - self.size * 2, self.position[1] - self.size * 2),
+                             special_flags=pygame.BLEND_RGB_ADD)
 
 
 # PARTICLE SYSTEM
