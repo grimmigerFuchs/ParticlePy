@@ -43,8 +43,6 @@ class BaseParticle:
         self.position[1] += self.velocity[1] * delta_time
         self.velocity[1] += gravity
 
-        print(self.alpha)
-
         # get progress of particle
         self.progress = self.get_progress(start_size, size)
         self.twisted_progress = 1 - self.progress
