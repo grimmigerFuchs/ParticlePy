@@ -1,6 +1,5 @@
 import pygame
 from pygame import gfxdraw
-import particlepy.math
 
 
 def circle_lighting_surf(particle):

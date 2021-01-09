@@ -1,7 +1,6 @@
 # particle.py
 
 from contextlib import redirect_stdout
-import particlepy.math
 import particlepy.lighting
 import random
 
@@ -13,7 +12,7 @@ with redirect_stdout(None):
 # CLASSES
 # PARTICLES
 class BaseParticle:
-    def __init__(self, position: tuple or list, velocity: tuple or list, color: int or tuple or list, lighting_color=None):
+    def __init__(self, position: tuple or list, velocity: tuple or list, color: tuple or list, alpha: float = 255, lighting_color=None):
         self.position = list(position)
         self.velocity = list(velocity)
 
@@ -23,19 +22,13 @@ class BaseParticle:
         self.alive = True
 
         # COLOR
-        self.color = particlepy.math.get_correct_color(color)
-
-        # define
+        self.color = list(color)
         self.start_color = self.color
-        self.alpha = self.color[3]
+        self.alpha = alpha
         self.start_alpha = self.alpha
         self.lighting_color = None
         if lighting_color is not None and (isinstance(lighting_color, tuple) or isinstance(lighting_color, list)):
-            self.lighting_color = particlepy.math.get_correct_color(lighting_color)
-
-        # correct color
-        for i in range(len(self.color)):
-            self.color[i] = int(self.color[i])
+            self.lighting_color = lighting_color
 
     def kill(self):
         self.alive = False
@@ -50,32 +43,25 @@ class BaseParticle:
         self.position[1] += self.velocity[1] * delta_time
         self.velocity[1] += gravity
 
-        # set color
-        self.color = list(self.color)
-        if len(self.color) < 4:
-            self.color.append(self.alpha)
-        else:
-            self.color[3] = self.alpha
-        for i in range(len(self.color)):
-            self.color[i] = int(self.color[i])
+        print(self.alpha)
 
         # get progress of particle
         self.progress = self.get_progress(start_size, size)
         self.twisted_progress = 1 - self.progress
 
     # fading
-    def fade_color(self, wanted_color):
-        self.color = (self.start_color[0] + (wanted_color[0] - self.start_color[0]) * self.twisted_progress,
-                      self.start_color[1] + (wanted_color[1] - self.start_color[1]) * self.twisted_progress,
-                      self.start_color[2] + (wanted_color[2] - self.start_color[2]) * self.twisted_progress)
+    def fade_color(self, color):
+        self.color = [self.start_color[0] + (color[0] - self.start_color[0]) * self.twisted_progress,
+                      self.start_color[1] + (color[1] - self.start_color[1]) * self.twisted_progress,
+                      self.start_color[2] + (color[2] - self.start_color[2]) * self.twisted_progress]
 
-    def fade_alpha(self, wanted_alpha):
-        self.alpha = self.start_alpha + (wanted_alpha - self.start_alpha) * self.twisted_progress
+    def fade_alpha(self, alpha):
+        self.alpha = self.start_alpha + (alpha - self.start_alpha) * self.twisted_progress
 
 
 class Circle(BaseParticle):
-    def __init__(self, position, velocity, size: float, delta_size: float, color, antialiasing: bool = False, lighting_color=None):
-        super().__init__(position, velocity, color, lighting_color)
+    def __init__(self, position, velocity, size: float, delta_size: float, color: tuple or list, alpha: float = 255, antialiasing: bool = False, lighting_color=None):
+        super().__init__(position, velocity, color, alpha, lighting_color)
 
         # radius
         self.size = size
@@ -94,8 +80,10 @@ class Circle(BaseParticle):
     def draw(self, surface):
         if self.alive:
             if self.antialiasing:
-                gfxdraw.aacircle(surface, int(self.position[0]), int(self.position[1]), int(self.size), self.color)
-            gfxdraw.filled_circle(surface, int(self.position[0]), int(self.position[1]), int(self.size), self.color)
+                gfxdraw.aacircle(surface, int(self.position[0]), int(self.position[1]), int(self.size),
+                                 (int(self.color[0]), int(self.color[1]), int(self.color[2]), int(self.alpha)))
+            gfxdraw.filled_circle(surface, int(self.position[0]), int(self.position[1]), int(self.size),
+                                  (int(self.color[0]), int(self.color[1]), int(self.color[2]), int(self.alpha)))
             if self.lighting_color is not None:
                 surface.blit(particlepy.lighting.circle_lighting_surf(self),
                              (self.position[0] - self.size * 2, self.position[1] - self.size * 2),
@@ -103,8 +91,8 @@ class Circle(BaseParticle):
 
 
 class Rect(BaseParticle):
-    def __init__(self, position, velocity, size: float, delta_size: float, color, lighting_color=None):
-        super().__init__(position, velocity, color, lighting_color)
+    def __init__(self, position, velocity, size: float, delta_size: float, color: tuple or list, alpha: float = 255, lighting_color=None):
+        super().__init__(position, velocity, color, alpha, lighting_color)
 
         # size
         if isinstance(size, float) or isinstance(size, int):
@@ -123,10 +111,8 @@ class Rect(BaseParticle):
 
     def draw(self, surface):
         if self.alive:
-            if self.lighting_color is not None:
-                self.lighting_surf = particlepy.lighting.rect_lighting_surf(particle=self)
-            gfxdraw.box(surface, (self.position[0] - self.size / 2, self.position[1] - self.size / 2,
-                                  self.size, self.size), self.color)
+            gfxdraw.box(surface, (self.position[0] - self.size / 2, self.position[1] - self.size / 2, self.size, self.size),
+                        (int(self.color[0]), int(self.color[1]), int(self.color[2]), int(self.alpha)))
             if self.lighting_color is not None:
                 surface.blit(particlepy.lighting.rect_lighting_surf(self),
                              (self.position[0] - self.size * 2, self.position[1] - self.size * 2),

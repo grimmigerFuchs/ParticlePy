@@ -49,7 +49,8 @@ while True:
                                                  velocity=(random.uniform(0, 1) * random.choice((-1, 1)), -4.5),    # x and y velocity
                                                  size=random.randint(6, 14),                                        # size of particles
                                                  delta_size=random.uniform(0.05, 0.1),                              # decreases size every frame
-                                                 color=random.randint(210, 255),                                    # rgb(a) or greyscale color
+                                                 color=(255, 255, 255),                                             # rgb(a) or greyscale color
+                                                 alpha=255,
                                                  antialiasing=True))                                                # aa normally turned off
 
             """
@@ -58,7 +59,8 @@ while True:
                                                velocity=(random.uniform(0, 1) * random.choice((-1, 1)), -4.5),
                                                size=random.randint(6, 14),
                                                delta_size=random.uniform(0.035, 0.050),
-                                               color=random.randint(210, 255)))
+                                               color=(255, 255, 255),
+                                               alpha=255))
             """
 
     # draw green point at mouse position
