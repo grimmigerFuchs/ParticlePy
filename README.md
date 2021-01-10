@@ -12,9 +12,12 @@
 - Pygame ~= 2.0.1
 
 ## Pip
-
 ```bash
-python -m pip install git+https://github.com/grimmigerFuchs/ParticlePy.git
+pip install particlepy
+```
+or
+```bash
+pip install git+https://github.com/grimmigerFuchs/ParticlePy.git
 ```
 
 ## Manually
