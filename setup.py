@@ -7,7 +7,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="particlepy",
-    version="0.1.2",
+    version="1.0.0",
     license="MIT License",
     author="grimmigerFuchs",
     author_email="grimmigerfuchs@gmail.com",
