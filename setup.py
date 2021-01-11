@@ -26,4 +26,5 @@ setuptools.setup(
     ],
     keywords="pygame particle torch dust easy game",
     python_requires='>=3.6',
+    zip_safe=False
 )
