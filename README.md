@@ -1,5 +1,6 @@
 <p align="center">
    <h2 align="center">ParticlePy</h2>
+   <h6 align="center">v1.0.1</h6>
    <p align="center">
       A short library for easy to use particles in Pygame based on <a href="http://dafluffypotato.com/" target="blank">DaFluffyPotato's</a> particle system.
    </p>
