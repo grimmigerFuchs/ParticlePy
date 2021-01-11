@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from contextlib import redirect_stdout
-import particlepy as par
+import particlepy
 import sys
 import time
 import random
@@ -21,7 +21,7 @@ FPS = 60
 old_time = time.time()
 
 # particle system
-particles = par.particle.ParticleSystem(remove_particles_batched=False)
+particles = particlepy.ParticleSystem(remove_particles_batched=False)
 SPAWN_TIMES = 2
 GRAVITY = 0
 
@@ -38,13 +38,13 @@ while True:
     old_time = time.time()
 
     for _ in range(SPAWN_TIMES):
-        particles.create(par.particle.Circle(position=pygame.mouse.get_pos(),
-                                             velocity=(random.uniform(0, 2.4) * random.choice((-1, 1)), random.uniform(0, 2.4) * random.choice((-1, 1))),
-                                             size=9 + random.uniform(0, 1.35),
-                                             delta_size=0.41,
-                                             color=(212, 118, 12),
-                                             antialiasing=True,
-                                             lighting_color=(5, 1, 0)))
+        particles.create(particlepy.Circle(position=pygame.mouse.get_pos(),
+                                           velocity=(random.uniform(0, 2.4) * random.choice((-1, 1)), random.uniform(0, 2.4) * random.choice((-1, 1))),
+                                           size=9 + random.uniform(0, 1.35),
+                                           delta_size=0.41,
+                                           color=(212, 118, 12),
+                                           antialiasing=True,
+                                           lighting_color=(5, 1, 0)))
 
     particles.update(delta_time=delta_time, gravity=GRAVITY)
     for particle in particles.particles:

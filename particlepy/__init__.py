@@ -10,4 +10,4 @@ with redirect_stdout(None):
     import pygame
 
 # particlepy
-import particlepy.particle
+from particlepy.particle import *

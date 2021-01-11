@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from contextlib import redirect_stdout
-import particlepy as par
+import particlepy
 import sys
 import time
 import random
@@ -13,14 +13,14 @@ with redirect_stdout(None):
 pygame.init()
 WIDTH, HEIGHT = 800, 800
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("ParPy [0.1.2] test program")
+pygame.display.set_caption("ParticlePy example program 3")
 clock = pygame.time.Clock()
 pygame.mouse.set_visible(False)
 
 FPS = 60
 old_time = time.time()
 
-particles = par.particle.ParticleSystem(remove_particles_batched=False)
+particles = particlepy.ParticleSystem(remove_particles_batched=False)
 SPAWN_TIMES = 2
 GRAVITY = 0
 
@@ -36,14 +36,14 @@ while True:
     old_time = time.time()
 
     for _ in range(SPAWN_TIMES):
-        particles.create(par.particle.Circle(position=pygame.mouse.get_pos(),
-                                             velocity=(random.uniform(0, 2.4) * random.choice((-1, 1)), random.uniform(0, 2.4) * random.choice((-1, 1))),
-                                             size=9 + random.uniform(0, 1.35),
-                                             delta_size=0.28,
-                                             color=(240, 84, 84),
-                                             alpha=255,
-                                             antialiasing=True,
-                                             lighting_color=(2, 1, 0)))
+        particles.create(particlepy.Circle(position=pygame.mouse.get_pos(),
+                                           velocity=(random.uniform(0, 2.4) * random.choice((-1, 1)), random.uniform(0, 2.4) * random.choice((-1, 1))),
+                                           size=9 + random.uniform(0, 1.35),
+                                           delta_size=0.28,
+                                           color=(240, 84, 84),
+                                           alpha=255,
+                                           antialiasing=True,
+                                           lighting_color=(2, 1, 0)))
 
     particles.update(delta_time=delta_time, gravity=GRAVITY)
     for particle in particles.particles:
