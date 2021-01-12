@@ -36,13 +36,13 @@ while True:
     old_time = time.time()
 
     for _ in range(SPAWN_TIMES):
-        particles.create(particlepy.Circle(position=pygame.mouse.get_pos(),
-                                           velocity=(random.uniform(0, 2.4) * random.choice((-1, 1)), random.uniform(0, 2.4) * random.choice((-1, 1))),
-                                           size=9 + random.uniform(0, 1.35),
-                                           delta_size=0.41,
-                                           color=(212, 118, 12),
-                                           antialiasing=True,
-                                           lighting_color=(5, 1, 0)))
+        particles.create(particlepy.Rect(position=pygame.mouse.get_pos(),
+                                         velocity=(random.uniform(0, 2.4) * random.choice((-1, 1)),
+                                                   random.uniform(0, 2.4) * random.choice((-1, 1))),
+                                         size=13 + random.uniform(0, 2),
+                                         delta_size=0.41,
+                                         color=(212, 118, 12),
+                                         lighting_color=(5, 1, 0)))
 
     particles.update(delta_time=delta_time, gravity=GRAVITY)
     for particle in particles.particles:
