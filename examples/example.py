@@ -1,13 +1,10 @@
 #!/usr/bin/env python3
 
-import contextlib
 import sys
 import time
 import random
 import particlepy
-
-with contextlib.redirect_stdout(None):  # mute pygame import message
-    import pygame
+import pygame
 
 # pygame config
 pygame.init()

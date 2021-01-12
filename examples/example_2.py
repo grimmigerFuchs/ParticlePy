@@ -1,12 +1,10 @@
 #!/usr/bin/env python3
 
-from contextlib import redirect_stdout
 import particlepy
 import sys
 import time
 import random
-with redirect_stdout(None):
-    import pygame
+import pygame
 
 
 # pygame config
