@@ -1,9 +1,10 @@
 # particle.py
 
-import particlepy.lighting
 import random
 import pygame
 from pygame import gfxdraw
+
+import particlepy.lighting
 
 
 # CLASSES
