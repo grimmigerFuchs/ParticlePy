@@ -39,7 +39,7 @@ pip install git+https://github.com/grimmigerFuchs/ParticlePy.git
 
 # Usage
 
-This is a short example of how to use this library. Others can be found in the [`examples`](examples) folder.\
+This is a short example of how to use this library. Others can be found in the [`examples`](https://github.com/grimmigerFuchs/ParticlePy/tree/master/examples) folder.\
 Note the standard FPS in the example was set to 60.
 
 ## Imports
@@ -93,13 +93,13 @@ particles.update(delta_time=delta_time, gravity=0.009)  # both arguments are opt
 particles.draw(surface=screen)  # draw particles on given surface
 ```
 
-The shown code was taken from the example program [`examples/example.py`](examples/example.py).
+The shown code was taken from the example program [`examples/example.py`](https://github.com/grimmigerFuchs/ParticlePy/blob/master/examples/example.py).
 
 ![Gif of example program being executed](https://media.giphy.com/media/961YhKg8e59t0Y9eUu/giphy.gif)
 
 # License
 
-Distributed under the [MIT License](https://choosealicense.com/licenses/mit/). See [`LICENSE`](LICENSE) for more
+Distributed under the [MIT License](https://choosealicense.com/licenses/mit/). See [`LICENSE`](https://github.com/grimmigerFuchs/ParticlePy/blob/master/LICENSE) for more
 information.
 
 # Contact
