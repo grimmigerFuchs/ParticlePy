@@ -1,12 +1,9 @@
 # particle.py
 
-from contextlib import redirect_stdout
 import particlepy.lighting
 import random
-
-with redirect_stdout(None):
-    import pygame
-    from pygame import gfxdraw
+import pygame
+from pygame import gfxdraw
 
 
 # CLASSES
