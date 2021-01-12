@@ -1,5 +1,4 @@
 import pygame
-from pygame import gfxdraw
 
 
 def circle_lighting_surf(particle):
@@ -16,3 +15,5 @@ def rect_lighting_surf(particle):
     pygame.draw.rect(surf, particle.lighting_color, (size, size, size * 2, size * 2))
     surf.set_colorkey((0, 0, 0))
     return surf
+
+# TODO: write documentation for lighting.py
