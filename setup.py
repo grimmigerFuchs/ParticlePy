@@ -17,7 +17,7 @@ setuptools.setup(
     url="https://github.com/grimmigerfuchs/particlepy",
     packages=setuptools.find_packages(),
     install_requires=[
-        "pygame~=2.0.1"
+        "pygame"
     ],
     classifiers=[
         "Programming Language :: Python :: 3",
