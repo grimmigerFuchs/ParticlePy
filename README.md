@@ -11,7 +11,7 @@
 
 ## Dependencies
 
-- Pygame ~= 2.0.1
+- Pygame = 2.0.1
 
 ## Pip
 ```bash
