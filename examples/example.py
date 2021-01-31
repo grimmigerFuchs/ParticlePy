@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 
+import particlepy
+import pygame
 import sys
 import time
 import random
-import particlepy
-import pygame
 
 # pygame config
 pygame.init()

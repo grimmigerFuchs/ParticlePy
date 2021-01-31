@@ -14,7 +14,7 @@ setuptools.setup(
     description="A short library for easy to use particles in Pygame based on DaFluffyPotato's particle system.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/grimmigerfuchs/particlepy",
+    url="https://github.com/grimmigerFuchs/ParticlePy",
     packages=setuptools.find_packages(),
     install_requires=[
         "pygame"
@@ -24,7 +24,6 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    keywords="pygame particle torch dust easy game",
-    python_requires='>=3.6',
-    zip_safe=False
+    keywords="pygame particle game simulation",
+    python_requires=">=3.0"
 )
