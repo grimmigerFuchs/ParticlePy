@@ -1,29 +1,26 @@
 #!/usr/bin/env python3
+# example.py
 
+import pygame
+import particlepy
 import sys
 import time
 import random
-import particlepy
-import pygame
 
 # pygame config
 pygame.init()
 SIZE = 800, 800
 screen = pygame.display.set_mode(SIZE)
-pygame.display.set_caption("ParticlePy example program 1")
-pygame.mouse.set_visible(False)  # cursor will be replaced with dot
+pygame.display.set_caption("ParticlePy example program")
 clock = pygame.time.Clock()
 FPS = 60
 
 # delta time
 old_time = time.time()
+delta_time = 0
 
-# instances
-particles = particlepy.ParticleSystem(remove_particles_batched=False)  # particle system; argument: no batched removals
-
-# how much particles get spawned at creation
-SPAWN_TIMES = 1
-GRAVITY = 0.04
+particles = particlepy.ParticleSystem()
+prefab_shape = particlepy.shape.Rect(radius=16, color=(3, 80, 111), alpha=255)
 
 # main loop
 while True:
@@ -32,46 +29,41 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_ESCAPE]:
+        pygame.quit()
+        sys.exit()
 
     # delta time
-    delta_time = time.time() - old_time
-    delta_time *= FPS
-    old_time = time.time()
+    now = time.time()
+    delta_time = now - old_time
+    old_time = now
 
-    # instantiate particles
-    if pygame.mouse.get_pressed(3)[0]:  # instantiate when left mouse button is pressed
-        for i in range(SPAWN_TIMES):
-            # circle
-            particles.create(particlepy.Circle(position=pygame.mouse.get_pos(),                                   # get mouse pos
-                                               velocity=(random.uniform(0, 1) * random.choice((-1, 1)), -4.5),    # x and y velocity
-                                               size=random.randint(6, 14),                                        # size of particles
-                                               delta_size=random.uniform(0.05, 0.1),                              # decreases size every frame
-                                               color=(255, 255, 255),                                             # rgb
-                                               alpha=255,
-                                               antialiasing=True))                                                # aa normally turned off
+    mouse_pos = pygame.mouse.get_pos()
 
-            """
-            # rectangle
-            particles.create(particlepy.Rect(position=pygame.mouse.get_pos(),
-                                             velocity=(random.uniform(0, 1) * random.choice((-1, 1)), -4.5),
-                                             size=random.randint(6, 14),
-                                             delta_size=random.uniform(0.035, 0.050),
-                                             color=(255, 255, 255),
-                                             alpha=255))
-            """
+    for _ in range(3):
+        particles.new(particlepy.Particle(shape=prefab_shape,
+                                          position=mouse_pos,
+                                          velocity=(random.uniform(-150, 150), random.uniform(-150, 150)),
+                                          delta_size=0.23,
+                                          is_prefab=True))
 
-    # draw green point at mouse position
-    pygame.draw.circle(screen, (25, 225, 25), pygame.mouse.get_pos(), 5)
+    particles.update(delta_time=delta_time)
 
-    # update position and size
-    particles.update(delta_time=delta_time, gravity=GRAVITY)  # delta time is optional; gravity pulls particles down
+    # color manipulation
+    for particle in particles.particles:
+        particle.shape.color = particlepy.math.fade_color(particle=particle,
+                                                          color=(83, 150, 181),
+                                                          progress=particle.inverted_progress)
 
-    # draw particles
-    particles.draw(surface=screen)  # draw particles on given surface
+    particles.make_shape()
 
-    print(f"Particles in system : {len(particles.particles)}")  # how much particles in particle system
+    # post surface creation manipulation
+    for particle in particles.particles:
+        particle.shape.rotate(angle=4)
 
-    # refresh window
+    particles.render(surface=screen)
+
     pygame.display.update()
-    screen.fill((25, 25, 25))
+    screen.fill((13, 17, 23))
     clock.tick(FPS)
