@@ -10,8 +10,6 @@
 
 # Installation
 
-------
-
 
 
 ## Dependencies
@@ -53,8 +51,6 @@ python3 setup.py install
 
 
 # Usage
-
-------
 
 This is a short example of how to use this library. Others can be found in the [`examples`](https://github.com/grimmigerFuchs/ParticlePy/tree/master/examples) folder.
 
@@ -139,16 +135,12 @@ The shown code was taken from the example program [`examples/example.py`](https:
 
 # License
 
-------
-
 Distributed under the [MIT License](https://choosealicense.com/licenses/mit/). See [`LICENSE`](https://github.com/grimmigerFuchs/ParticlePy/blob/master/LICENSE) for more
 information.
 
 
 
 # Contact
-
-------
 
 grimmigerFuchs - [grimmigerfuchs@gmail.com](mailto:grimmigerFuchs)\
 Github Repository: [https://github.com/grimmigerFuchs/ParticlePy](https://github.com/grimmigerFuchs/ParticlePy)\
