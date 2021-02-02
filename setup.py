@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+# setup.py
 
 import setuptools
 import pathlib
