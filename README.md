@@ -7,6 +7,12 @@
    </p>
 </p>
 
+<hr>
+
+[TOC]
+
+
+
 # Installation
 
 ------
@@ -19,7 +25,7 @@
 
 ## *Latest Stable*
 
-## Pip
+### Pip
 
 ```bash
 pip install particlepy
@@ -29,7 +35,7 @@ or
 pip install git+https://github.com/grimmigerFuchs/ParticlePy.git
 ```
 
-## Git
+### Git
 
 ```bash
  git clone https://github.com/grimmigerFuchs/ParticlePy.git
@@ -43,7 +49,7 @@ pip install git+https://github.com/grimmigerFuchs/ParticlePy.git
 
 ```bash
 git clone -b experimental --single-branch https://github.com/grimmigerFuchs/ParticlePy.git
-cd ParticlePy
+cd ParticlePy/
 python3 setup.py install
 ```
 
@@ -51,58 +57,79 @@ python3 setup.py install
 
 ------
 
-This is a short example of how to use this library. Others can be found in the [`examples`](https://github.com/grimmigerFuchs/ParticlePy/tree/master/examples) folder.\
-Note, that these snippets do not work together as a whole program; they only show the parts, where this package is used.
-
-## Imports
+This is a short example of how to use this library. Others can be found in the [`examples`](https://github.com/grimmigerFuchs/ParticlePy/tree/master/examples) folder.
 
 ```python
+#!/usr/bin/env python3
+# example.py
+
 import pygame
 import particlepy
+import sys
+import time
 import random
-```
 
-## Needed classes
+# pygame config
+pygame.init()
+SIZE = 800, 800
+screen = pygame.display.set_mode(SIZE)
+pygame.display.set_caption("ParticlePy example program")
+clock = pygame.time.Clock()
+FPS = 60
 
-```python
-# particle system with grouped functions
-particles = particlepy.ParticleSystem(remove_particles_batched=False)  # particle system; argument: no batched removals
-```
+# delta time
+old_time = time.time()
+delta_time = 0
 
-## Particle creation
+particles = particlepy.ParticleSystem()
+prefab_shape = particlepy.shape.Rect(radius=16, color=(3, 80, 111), alpha=255)
 
-### Circle
+# main loop
+while True:
+    # quit window
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_ESCAPE]:
+        pygame.quit()
+        sys.exit()
 
-```python
-particles.new(particlepy.Circle(position=pygame.mouse.get_pos(),  # get mouse pos
-                                velocity=(random.uniform(0, 1) * random.choice((-1, 1)), -3),  # x and y velocity
-                                size=random.randint(2, 25),  # size of particles
-                                delta_size=random.uniform(0.035, 0.050),  # decreases size every frame
-                                color=(255, 255, 255),  # rgb
-                                alpha=255,  # optional transparency
-                                antialiasing=True))  # aa normally turned off
-```
+    # delta time
+    now = time.time()
+    delta_time = now - old_time
+    old_time = now
 
-### Rectangle
+    mouse_pos = pygame.mouse.get_pos()
 
-```python
-# almost same as circles but for rects aa is not an option
-particles.new(particlepy.Rect(position=pygame.mouse.get_pos(),
-                              velocity=(random.uniform(0, 1) * random.choice((-1, 1)), -3),
-                              size=random.randint(2, 25),
-                              delta_size=random.uniform(0.035, 0.050),
-                              color=random.randint(210, 255),
-                              alpha=255))
-```
+    for _ in range(3):
+        particles.new(particlepy.Particle(shape=prefab_shape,
+                                          position=mouse_pos,
+                                          velocity=(random.uniform(-150, 150), random.uniform(-150, 150)),
+                                          delta_size=0.23,
+                                          is_prefab=True))
 
-## Updating positions and drawing the particles with particle systems
+    particles.update(delta_time=delta_time)
 
-```python
-# update position and size
-particles.update(delta_time=delta_time, gravity=0.009)  # both arguments are optional; gravity pulls particles down
+    # color manipulation
+    for particle in particles.particles:
+        particle.shape.color = particlepy.math.fade_color(particle=particle,
+                                                          color=(83, 150, 181),
+                                                          progress=particle.inverted_progress)
 
-# draw particles
-particles.render(surface=screen)  # draw particles on given surface
+    particles.make_shape()
+
+    # post surface creation manipulation
+    for particle in particles.particles:
+        particle.shape.rotate(angle=4)
+
+    particles.render(surface=screen)
+
+    pygame.display.update()
+    screen.fill((13, 17, 23))
+    clock.tick(FPS)
+
 ```
 
 The shown code was taken from the example program [`examples/example.py`](https://github.com/grimmigerFuchs/ParticlePy/blob/master/examples/example.py).
@@ -121,4 +148,5 @@ information.
 ------
 
 grimmigerFuchs - [grimmigerfuchs@gmail.com](mailto:grimmigerFuchs)\
-Project Link: [https://github.com/grimmigerFuchs/ParticlePy](https://github.com/grimmigerFuchs/ParticlePy)
+Github Repository: [https://github.com/grimmigerFuchs/ParticlePy](https://github.com/grimmigerFuchs/ParticlePy)\
+PyPi Project: [https://pypi.org/project/particlepy/](https://pypi.org/project/particlepy/)
