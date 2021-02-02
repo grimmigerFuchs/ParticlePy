@@ -6,13 +6,6 @@
       A short library for easy to use particles in Pygame based on <a href="http://dafluffypotato.com/" target="blank">DaFluffyPotato's</a> particle system.
    </p>
 </p>
-
-<hr>
-
-[TOC]
-
-
-
 # Installation
 
 ------
@@ -22,6 +15,8 @@
 ## Dependencies
 
 - Pygame = 2.0.1
+
+
 
 ## *Latest Stable*
 
@@ -52,6 +47,8 @@ git clone -b experimental --single-branch https://github.com/grimmigerFuchs/Part
 cd ParticlePy/
 python3 setup.py install
 ```
+
+
 
 # Usage
 
@@ -136,12 +133,16 @@ The shown code was taken from the example program [`examples/example.py`](https:
 
 ![Gif of example program being executed](https://media.giphy.com/media/961YhKg8e59t0Y9eUu/giphy.gif)
 
+
+
 # License
 
 ------
 
 Distributed under the [MIT License](https://choosealicense.com/licenses/mit/). See [`LICENSE`](https://github.com/grimmigerFuchs/ParticlePy/blob/master/LICENSE) for more
 information.
+
+
 
 # Contact
 
