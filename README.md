@@ -20,9 +20,9 @@
 
 ## **Versions**
 
-## *Latest Stable*
+### *Latest Stable*
 
-### Pip
+#### Pip
 
 ```bash
 pip install particlepy
@@ -40,7 +40,7 @@ pip install git+https://github.com/grimmigerFuchs/ParticlePy.git
  python3 setup.py install
 ```
 
-## *Latest Experimental*
+### *Latest Experimental*
 
 ```bash
 git clone -b experimental --single-branch https://github.com/grimmigerFuchs/ParticlePy.git
