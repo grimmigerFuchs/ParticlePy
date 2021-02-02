@@ -18,6 +18,8 @@
 
 
 
+## **Versions**
+
 ## *Latest Stable*
 
 ### Pip
@@ -37,8 +39,6 @@ pip install git+https://github.com/grimmigerFuchs/ParticlePy.git
  cd ParticlePy/
  python3 setup.py install
 ```
-
-
 
 ## *Latest Experimental*
 
