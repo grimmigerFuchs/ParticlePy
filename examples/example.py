@@ -52,7 +52,9 @@ while True:
 
     # color manipulation
     for particle in particles.particles:
-        particlepy.math.fade_color(particle=particle, color=(53, 130, 161), progress=particle.inverted_progress)
+        particle.shape.color = particlepy.math.fade_color(particle=particle,
+                                                          color=(53, 130, 161),
+                                                          progress=particle.inverted_progress)
 
     particles.make_shape()
 
