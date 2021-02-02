@@ -42,7 +42,7 @@ pip install git+https://github.com/grimmigerFuchs/ParticlePy.git
 ## *Latest Experimental*
 
 ```bash
-git clone -b expermental --single-branch https://github.com/grimmigerFuchs/ParticlePy.git
+git clone -b experimental --single-branch https://github.com/grimmigerFuchs/ParticlePy.git
 cd ParticlePy
 python3 setup.py install
 ```
