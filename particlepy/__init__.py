@@ -2,7 +2,7 @@
 
 __author__ = "grimmigerFuchs"
 __credits__ = __author__
-__version__ = "1.0.2"
+__version__ = "1.0.1"
 
 from particlepy.particle import *
 import particlepy.shape

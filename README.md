@@ -1,6 +1,6 @@
 <p align="center">
    <h2 align="center">ParticlePy</h2>
-   <h6 align="center">v1.0.2</h6>
+   <h6 align="center">v1.0.1</h6>
    <h5 align="center"><a href="https://github.com/grimmigerFuchs/ParticlePy/tree/master/examples">Examples</a></h5>
    <p align="center">
       A short library for easy to use particles in Pygame based on <a href="http://dafluffypotato.com/" target="blank">DaFluffyPotato's</a> particle system.
