@@ -45,7 +45,7 @@ while True:
         particles.new(particlepy.Particle(shape=prefab_shape,
                                           position=mouse_pos,
                                           velocity=(random.uniform(-150, 150), random.uniform(-150, 150)),
-                                          delta_size=0.2,
+                                          delta_size=0.23,
                                           is_prefab=True))
 
     particles.update(delta_time=delta_time)
@@ -53,7 +53,7 @@ while True:
     # color manipulation
     for particle in particles.particles:
         particle.shape.color = particlepy.math.fade_color(particle=particle,
-                                                          color=(53, 130, 161),
+                                                          color=(83, 150, 181),
                                                           progress=particle.inverted_progress)
 
     particles.make_shape()
