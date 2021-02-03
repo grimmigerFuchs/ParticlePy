@@ -1,4 +1,5 @@
 # __init__.py
+# -*- coding: utf-8 -*-
 
 __author__ = "grimmigerFuchs"
 __credits__ = __author__

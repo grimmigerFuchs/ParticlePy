@@ -45,7 +45,7 @@ while True:
         particles.new(particlepy.Particle(shape=prefab_shape,
                                           position=mouse_pos,
                                           velocity=(random.uniform(-150, 150), random.uniform(-150, 150)),
-                                          delta_size=0.23,
+                                          delta_size=0.2,
                                           is_prefab=True))
 
     particles.update(delta_time=delta_time)
