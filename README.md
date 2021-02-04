@@ -1,6 +1,6 @@
 <p align="center">
 	<h2 align="center">ParticlePy</h2>
-	<p>
+	<p align="center">
     	<img src="img/logo.svg" width=150>   
 	</p>
 	<h6 align="center">v1.0.1</h6>
