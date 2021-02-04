@@ -1,7 +1,7 @@
 <p align="center">
 	<h2 align="center">ParticlePy</h2>
    	<h6 align="center">v1.0.1</h6>
-    <!-- badges-->
+    	<!-- badges-->
 	<p align="center">
         <a href='https://particlepy.readthedocs.io/en/latest/?badge=latest' target="_blank">
             <img src='https://readthedocs.org/projects/particlepy/badge/?version=latest' alt='Documentation Status' />
