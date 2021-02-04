@@ -3,8 +3,8 @@
 	<p align="center">
     	<img src="img/logo.svg" width=150>   
 	</p>
-	<h6 align="center">v1.0.1</h6>
-    <!-- badges-->
+  <h6 align="center">v1.0.1</h6>
+  <!-- badges-->
 	<p align="center">
         <a href='https://particlepy.readthedocs.io/en/latest/?badge=latest' target="_blank">
             <img src='https://readthedocs.org/projects/particlepy/badge/?version=latest' alt='Documentation Status' />
