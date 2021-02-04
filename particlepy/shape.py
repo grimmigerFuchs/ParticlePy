@@ -8,10 +8,7 @@ import contextlib
 with contextlib.redirect_stdout(None):
     import pygame
 
-# TODO: (AA shapes)
-# TODO: angle as arg
-# TODO: decrease_size -> decrease_radius
-# TODO: attr!
+# TODO: AA shapes
 
 
 class BaseShape(object):
@@ -20,24 +17,25 @@ class BaseShape(object):
 
     Args:
         radius (float): Radius of shape
-        color (Tuple[int]): Color of shape
+        color (Tuple[int, int, int]): Color of shape
         alpha (int, optional): Transparency of shape `(0 - 255)`, defaults to `255`
+        angle (float, optional): Degrees of rotation of shape, defaults to `0`
 
     Attributes:
         radius (float): Radius of shape
-        _start_radius (float): Radius of shape when being instanced. Property function is :func:`BaseShape.start_radius`
+        _start_radius (float): Radius of shape when being instanced. Property is :func:`BaseShape.start_radius`
         angle (int): Degrees of rotation of shape
-        color (List[int]): Color of shape
-        _start_color (List[int]): Color of shape when being instanced. Property function is :func:`BaseShape.start_color`
+        color (List[int, int, int]): Color of shape
+        _start_color (Tuple[int, int, int]): Color of shape when being instanced. Property is :func:`BaseShape.start_color`
         alpha (int): Transparency of shape, ranges from `0` to `255`
-        _start_alpha (int): Transparency of shape when being instanced. Property function is :func:`BaseShape.start_alpha`
+        _start_alpha (int): Transparency of shape when being instanced. Property is :func:`BaseShape.start_alpha`
         surface (:class:`pygame.Surface`): Pygame surface of shape
     """
-    def __init__(self, radius: float, color: Tuple[int], alpha: int = 255):
+    def __init__(self, radius: float, color: Tuple[int, int, int], alpha: int = 255, angle: float = 0):
         self.radius = radius
         self._start_radius = self.radius
 
-        self.angle = 0
+        self.angle = angle
 
         self.color = list(color)
         self._start_color = tuple(self.color)
@@ -73,28 +71,18 @@ class BaseShape(object):
         """
         return self._start_alpha
 
-    def decrease_size(self, delta_size: float):
-        """Decreases radius of shape by :attr:`delta_size`
+    def decrease_radius(self, delta_radius: float):
+        """Decreases radius of shape by :attr:`delta_radius`
 
         Args:
-            delta_size (float): Radius decrease value
+            delta_radius (float): Radius decrease value
         """
-        self.radius -= delta_size
+        self.radius -= delta_radius
         if self.radius < 0:
             self.radius = 0
 
-    def rotate(self, angle: float):
-        """Rotates shape by :attr:`angle`
-
-        Args:
-            angle (float): Rotation angle
-        """
-        if self.radius >= 1:
-            self.angle += angle
-            self.surface = pygame.transform.rotate(self.surface, self.angle)
-
     def make_surface(self) -> pygame.Surface:
-        """Creates shape surface by creating transparent surface and making shape by calling :func:`particlepy.shape.BaseShape.make_shape`
+        """Creates shape surface by creating transparent surface and making shape by calling :func:`particlepy.shape.BaseShape.make_shape()`
 
         Returns:
             :class:`pygame.Surface`: Currently created shape surface (:attr:`surface`)
@@ -110,20 +98,72 @@ class BaseShape(object):
         raise NotImplementedError("particlepy.shape.BaseShape.make_shape() creates no shape."
                                   "Own functions have to be written for custom shapes.")
 
+    def rotate_shape(self):
+        """Rotates shape. Only called by :func:`particlepy.BaseShape.make_shape()`
+        """
+        if self.radius > 1:  # pygame issue: https://github.com/pygame/pygame/issues/2464
+            self.surface = pygame.transform.rotate(self.surface, self.angle)
+
 
 class Circle(BaseShape, ABC):
     """Circle shape class. Is subclass of :class:`particlepy.shape.BaseShape` and inherits all attributes and methods
+
+    Args:
+        radius (float): Radius of shape
+        color (Tuple[int, int, int]): Color of shape
+        alpha (int, optional): Transparency of shape `(0 - 255)`, defaults to `255`
+        angle (float, optional): Degrees of rotation of shape, defaults to `0`
+
+    Attributes:
+        radius (float): Radius of shape
+        _start_radius (float): Radius of shape when being instanced. Property is :func:`BaseShape.start_radius`
+        angle (int): Degrees of rotation of shape
+        color (List[int, int, int]): Color of shape
+        _start_color (Tuple[int, int, int]): Color of shape when being instanced. Property is :func:`BaseShape.start_color`
+        alpha (int): Transparency of shape, ranges from `0` to `255`
+        _start_alpha (int): Transparency of shape when being instanced. Property is :func:`BaseShape.start_alpha`
+        surface (:class:`pygame.Surface`): Pygame surface of shape
     """
+
+    def __init__(self, radius: float, color: Tuple[int, int, int], alpha: int = 255, angle: float = 0):
+        """Constructor method
+        """
+        super(Circle, self).__init__(radius=radius, color=color, alpha=alpha, angle=angle)
+
     def make_shape(self):
-        """Makes a circle
+        """Makes a circle and rotates it according to :attr:`angle`
         """
         pygame.draw.circle(self.surface, self.color, (self.radius, self.radius), self.radius)
+        self.rotate_shape()
 
 
 class Rect(BaseShape, ABC):
     """Rectangle shape class. Is subclass of :class:`particlepy.shape.BaseShape` and inherits all attributes and methods
+
+    Args:
+        radius (float): Radius of shape
+        color (Tuple[int, int, int]): Color of shape
+        alpha (int, optional): Transparency of shape `(0 - 255)`, defaults to `255`
+        angle (float, optional): Degrees of rotation of shape, defaults to `0`
+
+    Attributes:
+        radius (float): Radius of shape
+        _start_radius (float): Radius of shape when being instanced. Property is :func:`BaseShape.start_radius`
+        angle (int): Degrees of rotation of shape
+        color (List[int, int, int]): Color of shape
+        _start_color (Tuple[int, int, int]): Color of shape when being instanced. Property is :func:`BaseShape.start_color`
+        alpha (int): Transparency of shape, ranges from `0` to `255`
+        _start_alpha (int): Transparency of shape when being instanced. Property  is :func:`BaseShape.start_alpha`
+        surface (:class:`pygame.Surface`): Pygame surface of shape
     """
+
+    def __init__(self, radius: float, color: Tuple[int, int, int], alpha: int = 255, angle: float = 0):
+        """Constructor method
+        """
+        super(Rect, self).__init__(radius=radius, color=color, alpha=alpha, angle=angle)
+
     def make_shape(self):
-        """Makes a rectangle
+        """Makes a rectangle and rotates it according to :attr:`angle`
         """
         self.surface.fill(self.color)
+        self.rotate_shape()

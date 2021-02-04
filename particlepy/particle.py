@@ -2,18 +2,13 @@
 # -*- coding: utf-8 -*-
 
 from typing import Tuple, List
-from copy import copy
+import copy
 import contextlib
 
 with contextlib.redirect_stdout(None):
     import pygame
 
 import particlepy.shape
-
-
-# TODO: remove instance copy arg
-# TODO: classes attr every time dict
-# TODO: new() to emit()
 
 
 class Particle(object):
@@ -23,42 +18,38 @@ class Particle(object):
         shape (:class:`particlepy.shape.BaseShape`): Visual particle shape
         position (Tuple[float, float]): Center position
         velocity (Tuple[float, float]): Velocity
-        delta_size (float): Radius decrease value
-        is_prefab (bool, optional): `True` if given shape was already a instance, defaults to `False`
-        particle_dict (dict, optional): A dictionary for extra data, defaults to `None`
+        delta_radius (float): Radius decrease value
+        data (dict, optional): A dictionary for extra data, defaults to `None`
         alive (bool, optional): `True` if particle should be alive, and `False` if otherwise, defaults to `True`
 
     Attributes:
         shape (:class:`particlepy.shape.BaseShape`): Visual particle shape
         position (List[float, float]): Center position
         velocity (List[float, float]): Velocity (can be modified with gravity)
-        delta_size (float): Radius decrease value
+        delta_radius (float): Radius decrease value
         progress (float): A variable ranging from 0 to 1 to represent the lifespan
         inverted_progress (float): A variable ranging from 1 to 0 to represent the lifespan
-        dict (dict): A dictionary for extra data
+        data (dict): A dictionary for extra data
         alive (bool): `True` if particle is alive, and `False` if otherwise
     """
 
     def __init__(self, shape: particlepy.shape.BaseShape, position: Tuple[float, float], velocity: Tuple[float, float],
-                 delta_size: float, is_prefab: bool = False, particle_dict: dict = None, alive: bool = True):
+                 delta_radius: float, data: dict = None, alive: bool = True):
         """Constructor method
         """
-        if is_prefab:
-            self.shape = copy(shape)
-        else:
-            self.shape = shape
+        self.shape = copy.copy(shape)
 
         self.position = list(position)
         self.velocity = list(velocity)
 
-        self.delta_size = delta_size
+        self.delta_radius = delta_radius
         self.progress, self.inverted_progress = 0, 1
         self.get_progress()
 
-        if particle_dict:
-            self.dict = particle_dict
+        if data:
+            self.data = data
         else:
-            self.dict = {}
+            self.data = {}
 
         self.alive = alive
 
@@ -89,7 +80,7 @@ class Particle(object):
             gravity (Tuple[float, float], optional): Affects the velocity and 'pulls' it in a direction, defaults to (0, 0)
             delta_time (float, optional): A value to let the particle move according to frame time, defaults to 1
         """
-        self.shape.decrease_size(self.delta_size)
+        self.shape.decrease_radius(self.delta_radius)
         if self.shape.radius > 0:
             if self.alive:
                 self.position[0] += self.velocity[0] * delta_time
@@ -116,26 +107,26 @@ class ParticleSystem(object):
     """The particle system class. It is used to manage particles in a group
 
     Args:
-        particle_system_dict (dict, optional): A dictionary for extra data, defaults to None
+        data (dict, optional): A dictionary for extra data, defaults to None
         alive (bool, optional): `True` if particle system should be alive, and `False` if otherwise, defaults to `True`
 
     Attributes:
         particles (List[:class:`particlepy.particle.Particle`])
-        dict (dict): A dictionary for extra data
+        data (dict): A dictionary for extra data
         alive (bool): `True` if particle system is alive, and `False` if otherwise
     """
 
-    def __init__(self, particle_system_dict: dict = None, alive: bool = True):
+    def __init__(self, data: dict = None, alive: bool = True):
         """Constructor method
         """
-        self.particles = []
-        if particle_system_dict:
-            self.dict = particle_system_dict
+        self.particles: List[particlepy.particle.Particle] = []
+        if data:
+            self.data = data
         else:
-            self.dict = {}
+            self.data = {}
         self.alive = alive
 
-    def new(self, particle: Particle):
+    def emit(self, particle: Particle):
         """Creates a new particle
 
         Args:
@@ -145,7 +136,7 @@ class ParticleSystem(object):
             Exception: A particle was being created in a `not` :attr:`alive` particle system
         """
         if self.alive:
-            self.particles.append(copy(particle))
+            self.particles.append(copy.copy(particle))
         else:
             raise Exception("Particle system is not alive, not able to add particles")
 
@@ -165,7 +156,7 @@ class ParticleSystem(object):
         self.alive = True
 
     def update(self, gravity: Tuple[float] = (0, 0), delta_time: float = 1):
-        """Calls :func:`particlepy.Particle.update` for every particle in system
+        """Calls :func:`particlepy.Particle.update()` for every particle in system
 
         Args:
             gravity (Tuple[float], optional): Affects the velocity and 'pulls' particles in a direction, defaults to (0, 0)

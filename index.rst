@@ -1,1 +1,0 @@
-.. literalinclude:: examples/example.py

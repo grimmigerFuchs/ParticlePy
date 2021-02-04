@@ -64,7 +64,7 @@ python3 setup.py install
 
 # Usage
 
-This is a short example of how to use this library. Others can be found in the [`examples`](https://github.com/grimmigerFuchs/ParticlePy/tree/master/examples) folder.
+This is a short example of how to use this library. Examples can be found in the [`examples`](https://github.com/grimmigerFuchs/ParticlePy/tree/master/examples) folder.
 
 ```python
 #!/usr/bin/env python3
@@ -109,18 +109,19 @@ while True:
     old_time = now
 
     mouse_pos = pygame.mouse.get_pos()
+    Others
 
     for _ in range(3):
-        particles.new(particlepy.Particle(shape=prefab_shape,
-                                          position=mouse_pos,
-                                          velocity=(random.uniform(-150, 150), random.uniform(-150, 150)),
-                                          delta_size=0.23,
-                                          is_prefab=True))
+        particles.emit(particlepy.Particle(shape=prefab_shape,
+                                           position=mouse_pos,
+                                           velocity=(random.uniform(-150, 150), random.uniform(-150, 150)),
+                                           delta_size=0.23,
+                                           is_prefab=True))
 
     particles.update(delta_time=delta_time)
 
     # color manipulation
-    for particle in particles.particles:
+    for particle in particles.particle_system:
         particle.shape.color = particlepy.math.fade_color(particle=particle,
                                                           color=(83, 150, 181),
                                                           progress=particle.inverted_progress)
@@ -128,7 +129,7 @@ while True:
     particles.make_shape()
 
     # post surface creation manipulation
-    for particle in particles.particles:
+    for particle in particles.particle_system:
         particle.shape.rotate(angle=4)
 
     particles.render(surface=screen)
@@ -139,9 +140,7 @@ while True:
 
 ```
 
-The shown code was taken from the example program [`examples/example.py`](https://github.com/grimmigerFuchs/ParticlePy/blob/master/examples/example.py).
-
-![Gif of example program being executed](https://media.giphy.com/media/961YhKg8e59t0Y9eUu/giphy.gif)
+![Gif of particle simulation](https://media.giphy.com/media/961YhKg8e59t0Y9eUu/giphy.gif)
 
 
 
