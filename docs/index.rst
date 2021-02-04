@@ -10,6 +10,8 @@ Welcome to ParticlePy's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   introduction/index
+   examples/index
    modules/index
 
 
