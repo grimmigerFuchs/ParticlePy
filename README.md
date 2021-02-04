@@ -1,7 +1,7 @@
 <p align="center">
 	<h2 align="center">ParticlePy</h2>
 	<p align="center">
-    	<img src="img/logo.svg" width=150>   
+    	<img src="img/logo.svg" width=90>   
 	</p>
   <h6 align="center">v1.0.1</h6>
   <!-- badges-->
@@ -18,6 +18,7 @@
 		A short library for easy to use particles in Pygame based on <a href="http://dafluffypotato.com/" target="blank">DaFluffyPotato's</a> particle system.
 	</p>
 </p>
+
 
 
 
