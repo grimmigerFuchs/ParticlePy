@@ -1,4 +1,5 @@
 # particle.py
+# -*- coding: utf-8 -*-
 
 from typing import Tuple, List
 from copy import copy
@@ -10,41 +11,84 @@ with contextlib.redirect_stdout(None):
 import particlepy.shape
 
 
+# TODO: remove instance copy arg
+# TODO: classes attr every time dict
+# TODO: new() to emit()
+
+
 class Particle(object):
-    def __init__(self, shape: particlepy.shape.BaseShape, position: tuple or list, velocity: tuple or list,
+    """This is the particle class. It simulates the physics of a particle and can be used in a particle system (:class:`particlepy.particle.ParticleSystem`)
+
+    Args:
+        shape (:class:`particlepy.shape.BaseShape`): Visual particle shape
+        position (Tuple[float, float]): Center position
+        velocity (Tuple[float, float]): Velocity
+        delta_size (float): Radius decrease value
+        is_prefab (bool, optional): `True` if given shape was already a instance, defaults to `False`
+        particle_dict (dict, optional): A dictionary for extra data, defaults to `None`
+        alive (bool, optional): `True` if particle should be alive, and `False` if otherwise, defaults to `True`
+
+    Attributes:
+        shape (:class:`particlepy.shape.BaseShape`): Visual particle shape
+        position (List[float, float]): Center position
+        velocity (List[float, float]): Velocity (can be modified with gravity)
+        delta_size (float): Radius decrease value
+        progress (float): A variable ranging from 0 to 1 to represent the lifespan
+        inverted_progress (float): A variable ranging from 1 to 0 to represent the lifespan
+        dict (dict): A dictionary for extra data
+        alive (bool): `True` if particle is alive, and `False` if otherwise
+    """
+
+    def __init__(self, shape: particlepy.shape.BaseShape, position: Tuple[float, float], velocity: Tuple[float, float],
                  delta_size: float, is_prefab: bool = False, particle_dict: dict = None, alive: bool = True):
-        if particle_dict is None:
-            particle_dict = {}
+        """Constructor method
+        """
         if is_prefab:
             self.shape = copy(shape)
         else:
             self.shape = shape
-        self.progress, self.inverted_progress = 0, 1
-        self.get_progress()
-        self.delta_size = delta_size
 
         self.position = list(position)
         self.velocity = list(velocity)
 
-        self.alive = alive
+        self.delta_size = delta_size
+        self.progress, self.inverted_progress = 0, 1
+        self.get_progress()
 
         if particle_dict:
             self.dict = particle_dict
         else:
             self.dict = {}
 
+        self.alive = alive
+
     def kill(self):
+        """Sets attribute :attr:`alive` `False`
+        """
         self.alive = False
 
     def revive(self):
+        """Sets attribute :attr:`alive` `True`
+        """
         self.alive = True
 
     def get_progress(self) -> Tuple[float, float]:
+        """Returns tuple of two floats: `progress` and `inverted_progress`
+
+        Returns:
+            Tuple[float, float]: `progress` and `inverted_progress`
+        """
         progress = self.shape.radius / self.shape.start_radius
         self.progress, self.inverted_progress = progress, 1 - progress
         return self.progress, self.inverted_progress
 
-    def update(self, gravity: tuple or list = (0, 0), delta_time: float = 1):
+    def update(self, gravity: Tuple[float, float] = (0, 0), delta_time: float = 1):
+        """Updates position and velocity of particle and kills it, if :code:`radius <= 0`
+
+        Args:
+            gravity (Tuple[float, float], optional): Affects the velocity and 'pulls' it in a direction, defaults to (0, 0)
+            delta_time (float, optional): A value to let the particle move according to frame time, defaults to 1
+        """
         self.shape.decrease_size(self.delta_size)
         if self.shape.radius > 0:
             if self.alive:
@@ -58,34 +102,75 @@ class Particle(object):
             self.kill()
 
     def render(self, surface: pygame.Surface):
+        """Renders the particle on given surface
+
+        Args:
+            surface (:class:`pygame.Surface`): The surface on which the particle is being rendered on
+        """
         if self.alive:
             surface.blit(self.shape.surface, (self.position[0] - self.shape.surface.get_width() / 2,
                                               self.position[1] - self.shape.surface.get_height() / 2))
 
 
 class ParticleSystem(object):
-    def __init__(self, alive: bool = True):
-        self.particles: List[Particle, ...] = []
+    """The particle system class. It is used to manage particles in a group
+
+    Args:
+        particle_system_dict (dict, optional): A dictionary for extra data, defaults to None
+        alive (bool, optional): `True` if particle system should be alive, and `False` if otherwise, defaults to `True`
+
+    Attributes:
+        particles (List[:class:`particlepy.particle.Particle`])
+        dict (dict): A dictionary for extra data
+        alive (bool): `True` if particle system is alive, and `False` if otherwise
+    """
+
+    def __init__(self, particle_system_dict: dict = None, alive: bool = True):
+        """Constructor method
+        """
+        self.particles = []
+        if particle_system_dict:
+            self.dict = particle_system_dict
+        else:
+            self.dict = {}
         self.alive = alive
 
-        self.dict = {}
-
     def new(self, particle: Particle):
+        """Creates a new particle
+
+        Args:
+            particle (:class:`particlepy.particle.Particle`): Particle which is being created
+
+        Raises:
+            Exception: A particle was being created in a `not` :attr:`alive` particle system
+        """
         if self.alive:
-            self.particles.append(particle)
+            self.particles.append(copy(particle))
         else:
             raise Exception("Particle system is not alive, not able to add particles")
 
     def clear(self):
+        """Clears the particle list
+        """
         self.particles.clear()
 
     def kill(self):
+        """Sets :attr:`alive` `False`
+        """
         self.alive = False
 
     def revive(self):
+        """Sets :attr:`alive` `True`
+        """
         self.alive = True
 
-    def update(self, gravity: tuple or list = (0, 0), delta_time: float = 1):
+    def update(self, gravity: Tuple[float] = (0, 0), delta_time: float = 1):
+        """Calls :func:`particlepy.Particle.update` for every particle in system
+
+        Args:
+            gravity (Tuple[float], optional): Affects the velocity and 'pulls' particles in a direction, defaults to (0, 0)
+            delta_time (float, optional): A value to let the particles move according to frame time, defaults to 1
+        """
         if self.alive:
             for particle in self.particles:
                 particle.update(gravity=gravity, delta_time=delta_time)
@@ -93,11 +178,18 @@ class ParticleSystem(object):
                     self.particles.remove(particle)
 
     def make_shape(self):
+        """Makes the surface of all particles in system
+        """
         if self.alive:
             for particle in self.particles:
                 particle.shape.make_surface()
 
     def render(self, surface: pygame.Surface):
+        """Renders surface of all particles on given surface
+
+        Args:
+            surface (:class:`pygame.Surface`): Surface on which the particles are being rendered
+        """
         if self.alive:
             for particle in self.particles:
                 particle.render(surface=surface)
