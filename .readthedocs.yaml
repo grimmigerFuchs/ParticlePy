@@ -1,4 +1,4 @@
-# .readthedocs.yml
+# .readthedocs.yaml
 # Read the Docs configuration file
 
 version: 2
@@ -8,14 +8,10 @@ sphinx:
   configuration: docs/conf.py
   fail_on_warning: true
 
-formats: all
+formats:
+  - pdf
 
 python:
   version: 3.8
   install:
     - requirements: requirements.txt
-    - method: pip
-      path: .
-      extra_requirements:
-        - docs
-  system_packages: true
