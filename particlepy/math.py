@@ -6,12 +6,12 @@ from typing import Tuple
 import particlepy.particle
 
 
-def fade_color(particle: particlepy.particle.Particle, color: Tuple[int], progress: float):
+def fade_color(particle: particlepy.particle.Particle, color: Tuple[int, int, int], progress: float):
     """Fades color of :attr:`particle` over life span (:attr:`progress`) to new color (:attr:`color`)
 
     Args:
         particle (:class:`particlepy.particle.Particle`): Particle to fade color with
-        color (Tuple[int]): Color to fade to
+        color (Tuple[int, int, int]): Color to fade to
         progress (float): Life span identifier:
             :attr:`particlepy.particle.Particle.progress` or :attr:`particlepy.particle.Particle.inverted_progress`
 
