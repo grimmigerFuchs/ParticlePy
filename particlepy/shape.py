@@ -8,26 +8,26 @@ import contextlib
 with contextlib.redirect_stdout(None):
     import pygame
 
-# TODO: AA shapes
+# TODO: (AA shapes)
 # TODO: angle as arg
 # TODO: decrease_size -> decrease_radius
 # TODO: attr!
 
 
 class BaseShape(object):
-    """The basic shape class. Is used as the :attr:`shape` argument in :class:`particlepy.particle.Particle`.
-        Is subclassed to create other shapes, e.g. :class:`Circle` or :class:`Rect`
+    """The basic shape class. Is used as :attr:`shape` argument in :class:`particlepy.particle.Particle`.
+        Is subclassed to create other shapes, e.g. :class:`particlepy.shape.Circle` or :class:`particlepy.shape.Rect`
 
     Args:
         radius (float): Radius of shape
-        color (Tuple[int]): RGB color of shape
-        alpha (int, optional): Transparency of shape, ranges from `0` to `255`; defaults to `255`
+        color (Tuple[int]): Color of shape
+        alpha (int, optional): Transparency of shape `(0 - 255)`, defaults to `255`
 
     Attributes:
         radius (float): Radius of shape
         _start_radius (float): Radius of shape when being instanced. Property function is :func:`BaseShape.start_radius`
-        angle (int): Degrees of rotation of shape, defaults to `0`
-        color (List[int]): RGB color of shape
+        angle (int): Degrees of rotation of shape
+        color (List[int]): Color of shape
         _start_color (List[int]): Color of shape when being instanced. Property function is :func:`BaseShape.start_color`
         alpha (int): Transparency of shape, ranges from `0` to `255`
         _start_alpha (int): Transparency of shape when being instanced. Property function is :func:`BaseShape.start_alpha`
