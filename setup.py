@@ -10,7 +10,7 @@ README = (HERE / "README.md").read_text()
 if __name__ == "__main__":
     setuptools.setup(
         name="particlepy",
-        version="1.0.1",
+        version="1.0.2",
         license="MIT",
         author="grimmigerFuchs",
         author_email="grimmigerfuchs@gmail.com",
