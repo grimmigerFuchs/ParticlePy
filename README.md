@@ -3,7 +3,7 @@
 	<p align="center">
     	<img src="img/logo.svg" width=90>   
 	</p>
-  <h6 align="center">v1.0.1</h6>
+  <h6 align="center">v1.0.2</h6>
   <!-- badges-->
 	<p align="center">
         <a href='https://particlepy.readthedocs.io/en/latest/?badge=latest' target="_blank">
@@ -29,13 +29,21 @@
 
 ## Dependencies
 
-- Pygame = 2.0.1
+- Sphinx
+- sphinx_rtd_theme
+- pygame
+- setuptools
+
+```bash
+pip install -r requirements.txt
+```
+
 
 
 
 ## **Versions**
 
-### *Latest Stable*
+### *Latest*
 
 #### Pip
 
@@ -52,15 +60,7 @@ pip install git+https://github.com/grimmigerFuchs/ParticlePy.git
 ### Git
 
 ```bash
- git clone https://github.com/grimmigerFuchs/ParticlePy.git
- cd ParticlePy/
- python3 setup.py install
-```
-
-### *Latest Experimental*
-
-```bash
-git clone -b experimental --single-branch https://github.com/grimmigerFuchs/ParticlePy.git
+git clone https://github.com/grimmigerFuchs/ParticlePy.git
 cd ParticlePy/
 python3 setup.py install
 ```
