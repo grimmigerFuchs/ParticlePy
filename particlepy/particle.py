@@ -155,11 +155,11 @@ class ParticleSystem(object):
         """
         self.alive = True
 
-    def update(self, gravity: Tuple[float] = (0, 0), delta_time: float = 1):
+    def update(self, gravity: Tuple[float, float] = (0, 0), delta_time: float = 1):
         """Calls :func:`particlepy.Particle.update()` for every particle in system
 
         Args:
-            gravity (Tuple[float], optional): Affects the velocity and 'pulls' particles in a direction, defaults to (0, 0)
+            gravity (Tuple[float, float], optional): Affects the velocity and 'pulls' particles in a direction, defaults to (0, 0)
             delta_time (float, optional): A value to let the particles move according to frame time, defaults to 1
         """
         if self.alive:
