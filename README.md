@@ -1,11 +1,21 @@
 <p align="center">
-   <h2 align="center">ParticlePy</h2>
-   <h6 align="center">v1.0.1</h6>
-   <h5 align="center"><a href="https://github.com/grimmigerFuchs/ParticlePy/tree/master/examples">Examples</a></h5>
-   <p align="center">
-      A short library for easy to use particles in Pygame based on <a href="http://dafluffypotato.com/" target="blank">DaFluffyPotato's</a> particle system.
-   </p>
+	<h2 align="center">ParticlePy</h2>
+   	<h6 align="center">v1.0.1</h6>
+    <!-- badges-->
+	<p align="center">
+        <a href='https://particlepy.readthedocs.io/en/latest/?badge=latest' target="_blank">
+            <img src='https://readthedocs.org/projects/particlepy/badge/?version=latest' alt='Documentation Status' />
+        </a>
+       	<a href="https://pypi.org/project/particlepy/" target="_blank">
+            <img src="https://img.shields.io/badge/pypi-1.0.1-blue" alt="PyPi Version" />
+      	</a>
+	</p>
+	<h5 align="center"><a href="https://github.com/grimmigerFuchs/ParticlePy/tree/master/examples">Examples</a></h5>
+	<p align="center">
+		A short library for easy to use particles in Pygame based on <a href="http://dafluffypotato.com/" target="blank">DaFluffyPotato's</a> particle system.
+	</p>
 </p>
+
 
 
 # Installation
