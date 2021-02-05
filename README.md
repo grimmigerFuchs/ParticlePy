@@ -54,11 +54,11 @@ pip install -r requirements.txt
 #### Pip
 
 ```bash
-pip install particlepy
+pip install --upgrade particlepy
 ```
 or
 ```bash
-pip install git+https://github.com/grimmigerFuchs/ParticlePy.git
+pip install --upgrade git+https://github.com/grimmigerFuchs/ParticlePy.git
 ```
 
 
