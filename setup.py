@@ -7,9 +7,6 @@ import pathlib
 HERE = pathlib.Path(__file__).parent
 README = (HERE / "README.md").read_text()
 
-# todo: read from *.cfg file
-# todo: update py version
-
 if __name__ == "__main__":
     setuptools.setup(
         name="particlepy",
@@ -42,5 +39,5 @@ if __name__ == "__main__":
             "Bugtracker": "https://github.com/grimmigerFuchs/ParticlePy/issues",
         },
         keywords=["pygame", "particle", "game", "simulation", "realtime", "rendering"],
-        python_requires=">=3.0"
+        python_requires=">=3.6"
     )
