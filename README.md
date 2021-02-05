@@ -105,8 +105,6 @@ delta_time = 0
 
 # particle system to manage particles
 particle_system = particlepy.particle.ParticleSystem()
-# shape prefab to use as shape of particle
-prefab_shape = particlepy.shape.Rect(radius=16, angle=0, color=(3, 80, 111), alpha=255)
 
 # main loop
 while True:
@@ -129,10 +127,11 @@ while True:
     mouse_pos = pygame.mouse.get_pos()
 
     for _ in range(5):
-        particle_system.emit(particlepy.particle.Particle(shape=prefab_shape,
-                                                          position=mouse_pos,
-                                                          velocity=(random.uniform(-150, 150), random.uniform(-150, 150)),
-                                                          delta_radius=0.2))
+        particle_system.emit(
+            particlepy.particle.Particle(shape=particlepy.shape.Rect(radius=16, angle=random.randint(0, 360), color=(3, 80, 111), alpha=255),
+                                         position=mouse_pos,
+                                         velocity=(random.uniform(-150, 150), random.uniform(-150, 150)),
+                                         delta_radius=0.2))
 
     # update particle properties
     particle_system.update(delta_time=delta_time)
@@ -157,8 +156,6 @@ while True:
     pygame.display.update()
     screen.fill((13, 17, 23))
     clock.tick(FPS)
-
-
 ```
 
 ![Gif of particle simulation](https://media.giphy.com/media/961YhKg8e59t0Y9eUu/giphy.gif)
