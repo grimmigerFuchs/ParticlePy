@@ -13,7 +13,13 @@
             <img src="https://img.shields.io/badge/pypi-1.0.1-blue" alt="PyPi Version" />
       	</a>
 	</p>
-	<h5 align="center"><a href="https://github.com/grimmigerFuchs/ParticlePy/tree/master/examples">Examples</a></h5>
+    <h5 align="center">
+        <a href="https://github.com/grimmigerFuchs/ParticlePy/tree/master/examples">Examples</a>
+        &bull;
+        <a href="https://particlepy.readthedocs.io/en/latest/">Documentation</a>
+        &bull;
+        <a href="https://pypi.org/project/particlepy/">PyPi</a>
+    </h5>
 	<p align="center">
 		A short library for easy to use particles in Pygame based on <a href="http://dafluffypotato.com/" target="blank">DaFluffyPotato's</a> particle system.
 	</p>
