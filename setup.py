@@ -7,6 +7,9 @@ import pathlib
 HERE = pathlib.Path(__file__).parent
 README = (HERE / "README.md").read_text()
 
+# todo: read from *.cfg file
+# todo: update py version
+
 if __name__ == "__main__":
     setuptools.setup(
         name="particlepy",
@@ -23,7 +26,7 @@ if __name__ == "__main__":
             "pygame"
         ],
         classifiers=[
-            # (https://pypi.python.org/pypi?%3Aaction=list_classifiers)
+            # https://pypi.python.org/pypi?%3Aaction=list_classifiers
             "Programming Language :: Python :: 3",
             "License :: OSI Approved :: MIT License",
             "Operating System :: OS Independent",
