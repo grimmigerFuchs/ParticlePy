@@ -23,7 +23,7 @@ if __name__ == "__main__":
             "pygame"
         ],
         classifiers=[
-            # (https://pypi.python.org/pypi?%3Aaction=list_classifiers)
+            # https://pypi.python.org/pypi?%3Aaction=list_classifiers
             "Programming Language :: Python :: 3",
             "License :: OSI Approved :: MIT License",
             "Operating System :: OS Independent",
@@ -39,5 +39,5 @@ if __name__ == "__main__":
             "Bugtracker": "https://github.com/grimmigerFuchs/ParticlePy/issues",
         },
         keywords=["pygame", "particle", "game", "simulation", "realtime", "rendering"],
-        python_requires=">=3.0"
+        python_requires=">=3.6"
     )

@@ -1,7 +1,7 @@
 <p align="center">
 	<h2 align="center">ParticlePy</h2>
 	<p align="center">
-    	<img src="img/logo.svg" width=90>   
+    	<img src="https://raw.githubusercontent.com/grimmigerFuchs/ParticlePy/master/img/logo.svg" width=90>   
 	</p>
   <h6 align="center">v1.0.2</h6>
   <!-- badges-->
@@ -54,11 +54,11 @@ pip install -r requirements.txt
 #### Pip
 
 ```bash
-pip install particlepy
+pip install --upgrade particlepy
 ```
 or
 ```bash
-pip install git+https://github.com/grimmigerFuchs/ParticlePy.git
+pip install --upgrade git+https://github.com/grimmigerFuchs/ParticlePy.git
 ```
 
 
