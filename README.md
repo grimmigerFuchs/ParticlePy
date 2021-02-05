@@ -171,6 +171,6 @@ information.
 
 # Contact
 
-grimmigerFuchs - [grimmigerfuchs@gmail.com](mailto:grimmigerFuchs)\
+grimmigerFuchs - [grimmigerfuchs@gmail.com](mailto:grimmigerFuchs@gmail.com)\
 Github Repository: [https://github.com/grimmigerFuchs/ParticlePy](https://github.com/grimmigerFuchs/ParticlePy)\
 PyPi Project: [https://pypi.org/project/particlepy/](https://pypi.org/project/particlepy/)

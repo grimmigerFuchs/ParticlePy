@@ -29,7 +29,6 @@ if __name__ == "__main__":
             "Operating System :: OS Independent",
             "Topic :: Software Development :: Libraries",
             "Topic :: Software Development :: Libraries :: Python Modules",
-            "TOPIC :: SOFTWARE DEVELOPMENT :: LIBRARIES :: PYGAME",
             "Intended Audience :: Developers",
             "Natural Language :: English",
             "Topic :: Software Development"
