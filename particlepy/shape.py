@@ -127,11 +127,6 @@ class Circle(BaseShape, ABC):
         surface (:class:`pygame.Surface`): Pygame surface of shape
     """
 
-    def __init__(self, radius: float, color: Tuple[int, int, int], alpha: int = 255, angle: float = 0):
-        """Constructor method
-        """
-        super(Circle, self).__init__(radius=radius, color=color, alpha=alpha, angle=angle)
-
     def make_shape(self):
         """Makes a circle
         """
@@ -157,11 +152,6 @@ class Rect(BaseShape, ABC):
         _start_alpha (int): Transparency of shape when being instanced. Property  is :func:`BaseShape.start_alpha`
         surface (:class:`pygame.Surface`): Pygame surface of shape
     """
-
-    def __init__(self, radius: float, color: Tuple[int, int, int], alpha: int = 255, angle: float = 0):
-        """Constructor method
-        """
-        super(Rect, self).__init__(radius=radius, color=color, alpha=alpha, angle=angle)
 
     def make_shape(self):
         """Makes a rectangle
