@@ -9,11 +9,12 @@ with contextlib.redirect_stdout(None):
     import pygame
 
 # TODO: AA shapes
+# TODO: remove super calls
 
 
 class BaseShape(object):
     """The basic shape class. Is used as :attr:`shape` argument in :class:`particlepy.particle.Particle`.
-        Is subclassed to create other shapes, e.g. :class:`particlepy.shape.Circle` or :class:`particlepy.shape.Rect`
+        Is subclassed to create other shapes, e.g. :class:`Circle` or :class:`Rect`
 
     Args:
         radius (float): Radius of shape
@@ -96,18 +97,18 @@ class BaseShape(object):
     def make_shape(self):
         """Creates shape for shape surface. Can be modified to make different shapes and effects.
         """
-        raise NotImplementedError("particlepy.shape.BaseShape.make_shape() creates no shape."
+        raise NotImplementedError("BaseShape.make_shape() creates no shape."
                                   "Own functions have to be written for custom shapes.")
 
     def rotate_shape(self):
-        """Rotates shape. Only called by :func:`particlepy.BaseShape.make_shape()`
+        """Rotates shape. Only called by :func:`BaseShape.make_shape()`
         """
         if self.radius > 1:  # pygame issue: https://github.com/pygame/pygame/issues/2464
             self.surface = pygame.transform.rotate(self.surface, self.angle)
 
 
 class Circle(BaseShape, ABC):
-    """Circle shape class. Is subclass of :class:`particlepy.shape.BaseShape` and inherits all attributes and methods
+    """Circle shape class. Is subclass of :class:`BaseShape` and inherits all attributes and methods
 
     Args:
         radius (float): Radius of shape
@@ -138,7 +139,7 @@ class Circle(BaseShape, ABC):
 
 
 class Rect(BaseShape, ABC):
-    """Rectangle shape class. Is subclass of :class:`particlepy.shape.BaseShape` and inherits all attributes and methods
+    """Rectangle shape class. Is subclass of :class:`BaseShape` and inherits all attributes and methods
 
     Args:
         radius (float): Radius of shape
