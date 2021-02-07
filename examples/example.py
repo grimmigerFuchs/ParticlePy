@@ -48,7 +48,10 @@ while True:
 
     for _ in range(5):
         particle_system.emit(
-            particlepy.particle.Particle(shape=particlepy.shape.Rect(radius=16, angle=random.randint(0, 360), color=(3, 80, 111), alpha=255),
+            particlepy.particle.Particle(shape=particlepy.shape.Rect(radius=16,
+                                                                     angle=random.randint(0, 360),
+                                                                     color=(3, 80, 111),
+                                                                     alpha=255),
                                          position=mouse_pos,
                                          velocity=(random.uniform(-150, 150), random.uniform(-150, 150)),
                                          delta_radius=0.2))
