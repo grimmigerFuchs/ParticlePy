@@ -3,7 +3,7 @@
 	<p align="center">
     	<img src="https://raw.githubusercontent.com/grimmigerFuchs/ParticlePy/master/img/logo.svg" width=90>   
 	</p>
-  <h6 align="center">v1.0.3</h6>
+  <h6 align="center">v1.0.4-alpha</h6>
   <!-- badges-->
 	<p align="center">
         <a href='https://particlepy.readthedocs.io/en/latest/?badge=latest' target="_blank">
