@@ -82,7 +82,7 @@ class BaseShape(object):
             self.radius = 0
 
     def make_surface(self) -> pygame.Surface:
-        """Creates shape surface by creating transparent surface and making shape by calling :func:`particlepy.shape.BaseShape.make_shape()`
+        """Creates shape surface by calling :func:`BaseShape.make_shape()` and :func:`BaseShape.rotate()`
 
         Returns:
             :class:`pygame.Surface`: Currently created shape surface (:attr:`surface`)
@@ -90,6 +90,7 @@ class BaseShape(object):
         self.surface = pygame.Surface((self.radius * 2, self.radius * 2), pygame.SRCALPHA)
         self.surface.set_alpha(self.alpha)
         self.make_shape()
+        self.rotate_shape()
         return self.surface
 
     def make_shape(self):
@@ -131,10 +132,9 @@ class Circle(BaseShape, ABC):
         super(Circle, self).__init__(radius=radius, color=color, alpha=alpha, angle=angle)
 
     def make_shape(self):
-        """Makes a circle and rotates it according to :attr:`angle`
+        """Makes a circle
         """
         pygame.draw.circle(self.surface, self.color, (self.radius, self.radius), self.radius)
-        self.rotate_shape()
 
 
 class Rect(BaseShape, ABC):
@@ -163,7 +163,6 @@ class Rect(BaseShape, ABC):
         super(Rect, self).__init__(radius=radius, color=color, alpha=alpha, angle=angle)
 
     def make_shape(self):
-        """Makes a rectangle and rotates it according to :attr:`angle`
+        """Makes a rectangle
         """
         self.surface.fill(self.color)
-        self.rotate_shape()

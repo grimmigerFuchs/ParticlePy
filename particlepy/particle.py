@@ -29,6 +29,7 @@ class Particle(object):
         delta_radius (float): Radius decrease value
         progress (float): A variable ranging from 0 to 1 to represent the lifespan
         inverted_progress (float): A variable ranging from 1 to 0 to represent the lifespan
+        time (float): A simple timer
         data (dict): A dictionary for extra data
         alive (bool): `True` if particle is alive, and `False` if otherwise
     """
@@ -43,8 +44,11 @@ class Particle(object):
         self.velocity = list(velocity)
 
         self.delta_radius = delta_radius
+
         self.progress, self.inverted_progress = 0, 1
         self.get_progress()
+
+        self.time = 0
 
         if data:
             self.data = data
@@ -73,22 +77,24 @@ class Particle(object):
         self.progress, self.inverted_progress = progress, 1 - progress
         return self.progress, self.inverted_progress
 
-    def update(self, gravity: Tuple[float, float] = (0, 0), delta_time: float = 1):
-        """Updates position and velocity of particle and kills it, if :code:`radius <= 0`
+    def update(self, delta_time: float, gravity: Tuple[float, float] = None):
+        """Updates position, velocity, progress, etc. of particle and kills it, if :code:`radius <= 0`
 
         Args:
-            gravity (Tuple[float, float], optional): Affects the velocity and 'pulls' it in a direction, defaults to (0, 0)
-            delta_time (float, optional): A value to let the particle move according to frame time, defaults to 1
+            delta_time (float): A value to let the particle move according to frame time
+            gravity (Tuple[float, float], optional): Affects the velocity and 'pulls' it in a direction, defaults to None
         """
         self.shape.decrease_radius(self.delta_radius)
         if self.shape.radius > 0:
             if self.alive:
                 self.position[0] += self.velocity[0] * delta_time
                 self.position[1] += self.velocity[1] * delta_time
-                self.velocity[0] += gravity[0]
-                self.velocity[1] += gravity[1]
+                if gravity:
+                    self.velocity[0] += gravity[0]
+                    self.velocity[1] += gravity[1]
 
                 self.get_progress()
+                self.time += delta_time
         else:
             self.kill()
 
@@ -133,7 +139,7 @@ class ParticleSystem(object):
             particle (:class:`particlepy.particle.Particle`): Particle which is being created
 
         Raises:
-            Exception: A particle was being created in a `not` :attr:`alive` particle system
+            Exception: Particle system is not alive, not able to add particles
         """
         if self.alive:
             self.particles.append(copy.copy(particle))
@@ -155,12 +161,12 @@ class ParticleSystem(object):
         """
         self.alive = True
 
-    def update(self, gravity: Tuple[float, float] = (0, 0), delta_time: float = 1):
+    def update(self, delta_time: float, gravity: Tuple[float, float] = None):
         """Calls :func:`particlepy.Particle.update()` for every particle in system
 
         Args:
-            gravity (Tuple[float, float], optional): Affects the velocity and 'pulls' particles in a direction, defaults to (0, 0)
-            delta_time (float, optional): A value to let the particles move according to frame time, defaults to 1
+            delta_time (float): A value to let the particles move according to frame time
+            gravity (Tuple[float, float], optional): Affects the velocity and 'pulls' particles in a direction, defaults to None
         """
         if self.alive:
             for particle in self.particles:
