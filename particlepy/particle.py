@@ -12,7 +12,7 @@ import particlepy.shape
 
 
 class Particle(object):
-    """This is the particle class. It simulates the physics of a particle and can be used in a particle system (:class:`particlepy.particle.ParticleSystem`)
+    """This is the particle class. It simulates the physics of a particle and can be used in a particle system (:class:`ParticleSystem`)
 
     Args:
         shape (:class:`particlepy.shape.BaseShape`): Visual particle shape
@@ -117,7 +117,7 @@ class ParticleSystem(object):
         alive (bool, optional): `True` if particle system should be alive, and `False` if otherwise, defaults to `True`
 
     Attributes:
-        particles (List[:class:`particlepy.particle.Particle`])
+        particles (List[:class:`Particle`])
         data (dict): A dictionary for extra data
         alive (bool): `True` if particle system is alive, and `False` if otherwise
     """
@@ -136,7 +136,7 @@ class ParticleSystem(object):
         """Creates a new particle
 
         Args:
-            particle (:class:`particlepy.particle.Particle`): Particle which is being created
+            particle (:class:`Particle`): Particle which is being created
 
         Raises:
             Exception: Particle system is not alive, not able to add particles
@@ -162,7 +162,7 @@ class ParticleSystem(object):
         self.alive = True
 
     def update(self, delta_time: float, gravity: Tuple[float, float] = None):
-        """Calls :func:`particlepy.Particle.update()` for every particle in system
+        """Calls :func:`Particle.update()` for every particle in system
 
         Args:
             delta_time (float): A value to let the particles move according to frame time
