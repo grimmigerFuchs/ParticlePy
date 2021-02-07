@@ -36,15 +36,14 @@
 ## Dependencies
 
 - Sphinx
+
 - sphinx_rtd_theme
+
 - pygame
+
 - setuptools
 
-```bash
-pip install -r requirements.txt
-```
-
-
+  
 
 
 ## **Versions**
@@ -68,6 +67,7 @@ pip install --upgrade git+https://github.com/grimmigerFuchs/ParticlePy.git
 ```bash
 git clone https://github.com/grimmigerFuchs/ParticlePy.git
 cd ParticlePy/
+pip install -r requirements.txt
 python3 setup.py install
 ```
 
