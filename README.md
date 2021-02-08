@@ -10,7 +10,7 @@
             <img src='https://readthedocs.org/projects/particlepy/badge/?version=latest' alt='Documentation Status' />
         </a>
        	<a href="https://pypi.org/project/particlepy/" target="_blank">
-            <img src="https://img.shields.io/badge/pypi-1.0.3-blue" alt="PyPi Version" />
+            <img src="https://img.shields.io/badge/pypi-latest stable-blue" alt="PyPi Latest Stable" />
       	</a>
 	</p>
     <h5 align="center">
