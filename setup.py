@@ -102,6 +102,10 @@ setup(
     long_description_content_type='text/markdown',
     author=AUTHOR,
     author_email=EMAIL,
+    project_urls={
+        "GitHub Repo": "https://github.com/grimmigerFuchs/ParticlePy",
+        "Bugtracker": "https://github.com/grimmigerFuchs/ParticlePy/issues",
+    },
     python_requires=REQUIRES_PYTHON,
     url=URL,
     packages=find_packages(exclude=["tests", "*.tests", "*.tests.*", "tests.*"]),
@@ -132,6 +136,9 @@ setup(
         "Topic :: Games/Entertainment",
         "Topic :: Software Development :: Libraries :: Python Modules",
         "Topic :: Software Development :: Libraries :: pygame"
+    ],
+    keywords=[
+        "game", "simulation", "game-development", "pygame", "particles", "particle-physics", "particle-system"
     ],
     # $ setup.py publish support.
     cmdclass={
