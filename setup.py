@@ -19,7 +19,7 @@ URL = "https://github.com/grimmigerFuchs/ParticlePy"
 EMAIL = "grimmigerFuchs@gmail.com"
 AUTHOR = "grimmigerFuchs"
 REQUIRES_PYTHON = ">=3.6.0"
-VERSION = "1.0.4-alpha"
+VERSION = "1.0.4-beta"
 
 # What packages are required for this module to be executed?
 REQUIRED = [

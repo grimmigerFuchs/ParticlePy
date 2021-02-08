@@ -3,7 +3,7 @@
 
 __author__ = "grimmigerFuchs"
 __credits__ = __author__
-__version__ = "1.0.4-alpha"
+__version__ = "1.0.4-beta"
 
 import particlepy.particle
 import particlepy.shape
