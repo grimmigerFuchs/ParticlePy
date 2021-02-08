@@ -37,7 +37,7 @@
 
 - pygame
 
-- setuptools
+- *setuptools*
 
 - *Sphinx*
 
