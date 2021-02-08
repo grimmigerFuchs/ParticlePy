@@ -8,8 +8,8 @@ import contextlib
 with contextlib.redirect_stdout(None):
     import pygame
 
+
 # TODO: AA shapes
-# TODO: remove super calls
 
 
 class BaseShape(object):
@@ -32,6 +32,7 @@ class BaseShape(object):
         _start_alpha (int): Transparency of shape when being instanced. Property is :func:`BaseShape.start_alpha`
         surface (:class:`pygame.Surface`): Pygame surface of shape
     """
+
     def __init__(self, radius: float, color: Tuple[int, int, int], alpha: int = 255, angle: float = 0):
         self.radius = radius
         self._start_radius = self.radius
@@ -43,6 +44,7 @@ class BaseShape(object):
         self.alpha = alpha
         self._start_alpha = self.alpha
 
+        self.rect = None
         self.surface = self.make_surface()
 
     @property
@@ -92,6 +94,7 @@ class BaseShape(object):
         self.surface.set_alpha(self.alpha)
         self.make_shape()
         self.rotate_shape()
+        self.rect = self.surface.get_rect()
         return self.surface
 
     def make_shape(self):
