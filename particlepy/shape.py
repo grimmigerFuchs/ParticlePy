@@ -31,6 +31,7 @@ class BaseShape(object):
         alpha (int): Transparency of shape, ranges from `0` to `255`
         _start_alpha (int): Transparency of shape when being instanced. Property is :func:`BaseShape.start_alpha`
         surface (:class:`pygame.Surface`): Pygame surface of shape
+        rect (:class:`pygame.Rect`): Pygame Rect of :attr:`surface`. Position does not affect anything
     """
 
     def __init__(self, radius: float, color: Tuple[int, int, int], alpha: int = 255, angle: float = 0):
@@ -85,7 +86,7 @@ class BaseShape(object):
             self.radius = 0
 
     def make_surface(self) -> pygame.Surface:
-        """Creates shape surface by calling :func:`BaseShape.make_shape()` and :func:`BaseShape.rotate()`
+        """Creates shape surface and rect by calling :func:`BaseShape.make_shape()` and :func:`BaseShape.rotate()`
 
         Returns:
             :class:`pygame.Surface`: Currently created shape surface (:attr:`surface`)
