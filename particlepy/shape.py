@@ -18,8 +18,8 @@ with contextlib.redirect_stdout(None):
 
 class Shape(object):
     def __init__(self, alpha: float = 255, angle: float = 0):
-        self.alpha = alpha
-        self._start_alpha = self.alpha
+        self._start_alpha = alpha
+        self.alpha = self._start_alpha
         self.angle = angle
         self._start_angle = self.angle
 
@@ -240,20 +240,18 @@ class Image(Shape, ABC):
             return False
 
     def get_progress(self) -> Tuple[float, float]:
-        progress = self.size[0] - numpy.diff(self.size) / 2
+        progress = (self.size[0] - numpy.diff(self.size) / 2) / (self._start_size[0] - numpy.diff(self._start_size) / 2)
         return progress, 1 - progress
 
     def decrease(self, delta: float):
-        self.size[0] -= delta
-        self.size[1] -= delta
-        if self.size[0] <= 0:
-            self.size[0] = 0
-        if self.size[1] <= 0:
-            self.size[1] = 0
+        for i in range(2):
+            self.size[i] -= delta
+            if self.size[i] <= 0:
+                self.size[i] = 0
 
     def make_surface(self) -> pygame.Surface:
         self.make_shape()
-        if self.alpha > 0:
+        if self.alpha < 255:
             self.surface.set_alpha(self.alpha)
         return self.surface
 

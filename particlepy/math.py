@@ -6,7 +6,7 @@ from typing import Tuple
 import particlepy.particle
 
 
-def fade_color(particle: particlepy.particle.Particle, color: Tuple[int, int, int], progress: float):
+def fade_color(particle: particlepy.particle.Particle, color: Tuple[int, int, int], progress: float) -> list:
     """Fades color of :attr:`particle` over life span (:attr:`progress`) to new color (:attr:`color`)
 
     Args:
@@ -23,7 +23,7 @@ def fade_color(particle: particlepy.particle.Particle, color: Tuple[int, int, in
             particle.shape.start_color[2] + (color[2] - particle.shape.start_color[2]) * progress]
 
 
-def fade_alpha(particle: particlepy.particle.Particle, alpha: int, progress: float):
+def fade_alpha(particle: particlepy.particle.Particle, alpha: int, progress: float) -> float:
     """Fades :attr:`alpha` (transparency) of argument :attr:`particle` over life span (:attr:`progress`) to new color (:attr:`color`)
 
     Args:

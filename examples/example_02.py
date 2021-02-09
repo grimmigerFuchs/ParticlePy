@@ -54,13 +54,10 @@ while True:
 
     for _ in range(5):
         particle_system.emit(
-            particlepy.particle.Particle(shape=particlepy.shape.Image(surface=image, size=(30, 30)),
+            particlepy.particle.Particle(shape=particlepy.shape.Image(surface=image, size=(30, 30), alpha=255),
                                          position=mouse_pos,
                                          velocity=(random.uniform(-150, 150), random.uniform(-150, 150)),
                                          delta_radius=0.5))
-
-    for particle in particle_system.particles:
-        particle.shape.angle += 2
 
     # render shapes
     particle_system.make_shape()
@@ -70,5 +67,5 @@ while True:
 
     # update display
     pygame.display.update()
-    screen.fill((13, 17, 23))
+    screen.fill((22, 27, 34))
     clock.tick(FPS)
