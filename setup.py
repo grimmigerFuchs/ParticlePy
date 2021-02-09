@@ -105,6 +105,7 @@ setup(
     project_urls={
         "GitHub Repo": "https://github.com/grimmigerFuchs/ParticlePy",
         "Bugtracker": "https://github.com/grimmigerFuchs/ParticlePy/issues",
+        "Documentation": "https://particlepy.readthedocs.io/"
     },
     python_requires=REQUIRES_PYTHON,
     url=URL,
