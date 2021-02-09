@@ -3,6 +3,8 @@
 
 from typing import Tuple
 from abc import ABC
+import copy
+import numpy
 import contextlib
 
 with contextlib.redirect_stdout(None):
@@ -10,10 +12,47 @@ with contextlib.redirect_stdout(None):
 
 
 # TODO: AA shapes
+# todo: remove rotate_shape()
+# todo: change _start_... to _orig_...
 
 
-class BaseShape(object):
-    """The basic shape class. Is used as :attr:`shape` argument in :class:`particlepy.particle.Particle`.
+class Shape(object):
+    def __init__(self, alpha: float = 255, angle: float = 0):
+        self.alpha = alpha
+        self._start_alpha = self.alpha
+        self.angle = angle
+        self._start_angle = self.angle
+
+        self.surface: pygame.Surface = None
+        self.rect: pygame.Rect = None
+
+    @property
+    def start_alpha(self):
+        return self._start_alpha
+
+    @property
+    def start_angle(self):
+        return self._start_angle
+
+    def check_size_above_zero(self) -> bool:
+        raise NotImplementedError
+
+    def get_progress(self) -> Tuple[float, float]:
+        raise NotImplementedError
+
+    def decrease(self, delta: float):
+        raise NotImplementedError
+
+    def make_surface(self) -> pygame.Surface:
+        self.make_shape()
+        raise NotImplementedError
+
+    def make_shape(self):
+        raise NotImplementedError
+
+
+class BaseForm(Shape, ABC):
+    """The basic form class. Is used as :attr:`shape` argument in :class:`particlepy.particle.Particle`.
         Is subclassed to create other shapes, e.g. :class:`Circle` or :class:`Rect`
 
     Args:
@@ -35,15 +74,13 @@ class BaseShape(object):
     """
 
     def __init__(self, radius: float, color: Tuple[int, int, int], alpha: int = 255, angle: float = 0):
+        super(BaseForm, self).__init__(alpha=alpha, angle=angle)
+
         self.radius = radius
         self._start_radius = self.radius
 
-        self.angle = angle
-
         self.color = list(color)
         self._start_color = tuple(self.color)
-        self.alpha = alpha
-        self._start_alpha = self.alpha
 
         self.rect = None
         self.surface = self.make_surface()
@@ -66,22 +103,28 @@ class BaseShape(object):
         """
         return self._start_color
 
-    @property
-    def start_alpha(self):
-        """Returns :attr:`_start_alpha`
+    def check_size_above_zero(self):
+        if self.radius > 0:
+            return True
+        else:
+            return False
+
+    def get_progress(self) -> Tuple[float, float]:
+        """Returns tuple of two floats: `progress` and `inverted_progress`
 
         Returns:
-            int: :attr:`_start_alpha`
+            Tuple[float, float]: `progress` and `inverted_progress`
         """
-        return self._start_alpha
+        progress = self.radius / self._start_radius
+        return progress, 1 - progress
 
-    def decrease_radius(self, delta_radius: float):
+    def decrease(self, delta: float):
         """Decreases radius of shape by :attr:`delta_radius`
 
         Args:
-            delta_radius (float): Radius decrease value
+            delta (float): Radius decrease value
         """
-        self.radius -= delta_radius
+        self.radius -= delta
         if self.radius < 0:
             self.radius = 0
 
@@ -111,7 +154,7 @@ class BaseShape(object):
             self.surface = pygame.transform.rotate(self.surface, self.angle)
 
 
-class Circle(BaseShape, ABC):
+class Circle(BaseForm, ABC):
     """Circle shape class. Is subclass of :class:`BaseShape` and inherits all attributes and methods
 
     Args:
@@ -140,7 +183,7 @@ class Circle(BaseShape, ABC):
         pygame.draw.circle(self.surface, self.color, (self.radius, self.radius), self.radius)
 
 
-class Rect(BaseShape, ABC):
+class Rect(BaseForm, ABC):
     """Rectangle shape class. Is subclass of :class:`BaseShape` and inherits all attributes and methods
 
     Args:
@@ -167,3 +210,56 @@ class Rect(BaseShape, ABC):
         """Makes a rectangle
         """
         self.surface.fill(self.color)
+
+
+class Image(Shape, ABC):
+    # todo: copy
+    def __init__(self, surface: pygame.Surface, size: Tuple[int, int], alpha: int = 255, angle: float = 0):
+        super(Image, self).__init__(alpha=alpha, angle=angle)
+        self._start_size = tuple(size)
+        self.size = list(self._start_size)
+
+        self._start_surface = surface.copy()
+        self.surface = None
+        self.rect = None
+
+        self.make_surface()
+
+    @property
+    def start_size(self):
+        return self._start_size
+
+    @property
+    def start_surface(self):
+        return self._start_surface
+
+    def check_size_above_zero(self) -> bool:
+        if (self.size[0] > 0) and (self.size[1] > 0):
+            return True
+        else:
+            return False
+
+    def get_progress(self) -> Tuple[float, float]:
+        progress = self.size[0] - numpy.diff(self.size) / 2
+        return progress, 1 - progress
+
+    def decrease(self, delta: float):
+        self.size[0] -= delta
+        self.size[1] -= delta
+        if self.size[0] <= 0:
+            self.size[0] = 0
+        if self.size[1] <= 0:
+            self.size[1] = 0
+
+    def make_surface(self) -> pygame.Surface:
+        self.make_shape()
+        if self.alpha > 0:
+            self.surface.set_alpha(self.alpha)
+        return self.surface
+
+    def make_shape(self):
+        if self.size != self._start_size:
+            self.surface = pygame.transform.scale(self._start_surface, (int(self.size[0]), int(self.size[1])))
+        if self.angle != 0 and (self.size[0] > 1 and self.size[1] > 1):
+            self.surface = pygame.transform.rotate(self.surface, self.angle)
+        self.rect = self.surface.get_rect()

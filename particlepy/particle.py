@@ -15,7 +15,7 @@ class Particle(object):
     """This is the particle class. It simulates the physics of a particle and can be used in a particle system (:class:`ParticleSystem`)
 
     Args:
-        shape (:class:`particlepy.shape.BaseShape`): Visual particle shape
+        shape (:class:`particlepy.shape.Shape`): Visual particle shape
         position (Tuple[float, float]): Center position
         velocity (Tuple[float, float]): Velocity
         delta_radius (float): Radius decrease value
@@ -23,7 +23,7 @@ class Particle(object):
         alive (bool, optional): `True` if particle should be alive, and `False` if otherwise, defaults to `True`
 
     Attributes:
-        shape (:class:`particlepy.shape.BaseShape`): Visual particle shape
+        shape (:class:`particlepy.shape.Shape`): Visual particle shape
         position (List[float, float]): Center position
         velocity (List[float, float]): Velocity (can be modified with gravity)
         delta_radius (float): Radius decrease value
@@ -34,7 +34,7 @@ class Particle(object):
         alive (bool): `True` if particle is alive, and `False` if otherwise
     """
 
-    def __init__(self, shape: particlepy.shape.BaseShape, position: Tuple[float, float], velocity: Tuple[float, float],
+    def __init__(self, shape: particlepy.shape.Shape, position: Tuple[float, float], velocity: Tuple[float, float],
                  delta_radius: float, data: dict = None, alive: bool = True):
         """Constructor method
         """
@@ -45,16 +45,14 @@ class Particle(object):
 
         self.delta_radius = delta_radius
 
-        self.progress, self.inverted_progress = 0, 1
-        self.get_progress()
-
-        self.time = 0
+        self.progress, self.inverted_progress = self.shape.get_progress()
 
         if data:
             self.data = data
         else:
             self.data = {}
 
+        self.time = 0
         self.alive = alive
 
     def kill(self):
@@ -67,16 +65,6 @@ class Particle(object):
         """
         self.alive = True
 
-    def get_progress(self) -> Tuple[float, float]:
-        """Returns tuple of two floats: `progress` and `inverted_progress`
-
-        Returns:
-            Tuple[float, float]: `progress` and `inverted_progress`
-        """
-        progress = self.shape.radius / self.shape.start_radius
-        self.progress, self.inverted_progress = progress, 1 - progress
-        return self.progress, self.inverted_progress
-
     def update(self, delta_time: float, gravity: Tuple[float, float] = None):
         """Updates position, velocity, progress, etc. of particle and kills it, if :code:`radius <= 0`
 
@@ -84,8 +72,8 @@ class Particle(object):
             delta_time (float): A value to let the particle move according to frame time
             gravity (Tuple[float, float], optional): Affects the velocity and 'pulls' it in a direction, defaults to None
         """
-        self.shape.decrease_radius(self.delta_radius)
-        if self.shape.radius > 0:
+        self.shape.decrease(self.delta_radius)
+        if self.shape.check_size_above_zero():
             if self.alive:
                 self.position[0] += self.velocity[0] * delta_time
                 self.position[1] += self.velocity[1] * delta_time
@@ -93,7 +81,7 @@ class Particle(object):
                     self.velocity[0] += gravity[0]
                     self.velocity[1] += gravity[1]
 
-                self.get_progress()
+                self.progress, self.inverted_progress = self.shape.get_progress()
                 self.time += delta_time
         else:
             self.kill()

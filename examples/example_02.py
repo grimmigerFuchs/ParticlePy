@@ -5,6 +5,7 @@ import pygame
 import particlepy
 import sys
 import time
+import copy
 import random
 
 pygame.init()
@@ -25,6 +26,8 @@ delta_time = 0
 
 # particle system to manage particles
 particle_system = particlepy.particle.ParticleSystem()
+# shape = particlepy.shape.Rect(radius=15, color=(255, 255, 255))
+image = pygame.image.load("data/image.png")
 
 # main loop
 while True:
@@ -43,35 +46,24 @@ while True:
     delta_time = now - old_time
     old_time = now
 
+    # update particle properties
+    particle_system.update(delta_time=delta_time, gravity=(0, -5))
+
     # get mouse position
     mouse_pos = pygame.mouse.get_pos()
 
     for _ in range(5):
         particle_system.emit(
-            particlepy.particle.Particle(shape=particlepy.shape.Rect(radius=16,
-                                                                     angle=random.randint(0, 360),
-                                                                     color=(3, 80, 111),
-                                                                     alpha=255),
+            particlepy.particle.Particle(shape=particlepy.shape.Image(surface=image, size=(30, 30)),
                                          position=mouse_pos,
                                          velocity=(random.uniform(-150, 150), random.uniform(-150, 150)),
-                                         delta_radius=0.2))
+                                         delta_radius=0.5))
 
-    # update particle properties
-    particle_system.update(delta_time=delta_time)
-    print(len(particle_system.particles))
-
-    # color manipulation
     for particle in particle_system.particles:
-        particle.shape.color = particlepy.math.fade_color(particle=particle,
-                                                          color=(83, 150, 181),
-                                                          progress=particle.inverted_progress)
+        particle.shape.angle += 2
 
     # render shapes
     particle_system.make_shape()
-
-    # post shape creation manipulation
-    for particle in particle_system.particles:
-        particle.shape.angle += 5
 
     # render particles
     particle_system.render(surface=screen)
