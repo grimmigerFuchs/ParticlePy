@@ -26,7 +26,8 @@ delta_time = 0
 
 # particle system to manage particles
 particle_system = particlepy.particle.ParticleSystem()
-# shape = particlepy.shape.Rect(radius=15, color=(255, 255, 255))
+
+# load image
 image = pygame.image.load("data/image.png")
 
 # main loop
