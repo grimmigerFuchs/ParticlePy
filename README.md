@@ -54,8 +54,6 @@
 
 ```bash
 pip install --upgrade particlepy
-# or
-pip install --upgrade git+https://github.com/grimmigerFuchs/ParticlePy.git
 ```
 
 
