@@ -12,7 +12,9 @@ pygame.init()
 
 # pygame config
 SIZE = 800, 800
+SCALE_RATIO = 4
 screen = pygame.display.set_mode(SIZE)
+display = pygame.Surface(tuple(item // SCALE_RATIO for item in SIZE))
 pygame.display.set_caption("ParticlePy example program")
 pygame.mouse.set_visible(False)
 
@@ -48,25 +50,26 @@ while True:
     old_time = now
 
     # update particle properties
-    particle_system.update(delta_time=delta_time, gravity=(0, -5))
+    particle_system.update(delta_time=delta_time, gravity=(0, -4))
 
     # get mouse position
-    mouse_pos = pygame.mouse.get_pos()
+    mouse_pos = tuple(pos // SCALE_RATIO for pos in pygame.mouse.get_pos())
 
-    for _ in range(5):
+    for _ in range(6):
         particle_system.emit(
-            particlepy.particle.Particle(shape=particlepy.shape.Image(surface=image, size=(30, 30), alpha=255),
+            particlepy.particle.Particle(shape=particlepy.shape.Image(surface=image, size=(20, 20), alpha=255),
                                          position=mouse_pos,
-                                         velocity=(random.uniform(-150, 150), random.uniform(-150, 150)),
+                                         velocity=(random.uniform(-100, 100), random.uniform(-100, 100)),
                                          delta_radius=0.5))
 
     # render shapes
     particle_system.make_shape()
 
     # render particles
-    particle_system.render(surface=screen)
+    particle_system.render(surface=display)
 
     # update display
+    screen.blit(pygame.transform.scale(display, SIZE), (0, 0))
     pygame.display.update()
-    screen.fill((22, 27, 34))
+    display.fill((22, 27, 34))
     clock.tick(FPS)
