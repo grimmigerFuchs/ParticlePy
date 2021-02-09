@@ -8,15 +8,29 @@ import time
 import copy
 import random
 
+
+def palette_swap(surface: pygame.Surface, old_color, new_color):
+    surf_copy = surface.copy()
+    img_copy = pygame.Surface(surf_copy.get_size())
+    img_copy.fill(new_color)
+    surf_copy.set_colorkey(old_color)
+    img_copy.blit(surf_copy, (0, 0))
+    img_copy.set_colorkey((0, 0, 0))
+    return img_copy
+
+
 pygame.init()
 
 # pygame config
 SIZE = 800, 800
 SCALE_RATIO = 4
 screen = pygame.display.set_mode(SIZE)
-display = pygame.Surface(tuple(item // SCALE_RATIO for item in SIZE))
 pygame.display.set_caption("ParticlePy example program")
 pygame.mouse.set_visible(False)
+
+# surfaces
+display = pygame.Surface(tuple(item // SCALE_RATIO for item in SIZE))
+display.set_colorkey((0, 0, 0))
 
 # timing
 clock = pygame.time.Clock()
@@ -30,7 +44,7 @@ delta_time = 0
 particle_system = particlepy.particle.ParticleSystem()
 
 # load image
-image = pygame.image.load("data/image.png").convert()
+image = pygame.image.load("data/image.png").convert_alpha()
 
 # main loop
 while True:
@@ -69,7 +83,11 @@ while True:
     particle_system.render(surface=display)
 
     # update display
-    screen.blit(pygame.transform.scale(display, SIZE, screen), (0, 0))
+    screen.blit(pygame.transform.scale(palette_swap(display, (255, 255, 255), (90, 90, 90)), SIZE), (-15, 10))
+    screen.blit(pygame.transform.scale(display, SIZE), (0, 0))
     pygame.display.update()
-    display.fill((22, 27, 34))
-    clock.tick(FPS)
+
+    screen.fill((22, 27, 34))
+    display.fill((0, 0, 0))
+
+    clock.tick(60)
