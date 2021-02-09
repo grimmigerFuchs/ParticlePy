@@ -12,8 +12,19 @@ with contextlib.redirect_stdout(None):
 
 
 # TODO: AA shapes
-# todo: remove rotate_shape()
 # todo: change _start_... to _orig_...
+
+
+def rotate(surface: pygame.Surface, angle: float):
+    """Rotates shape by angle
+
+    Notes:
+        Only exists because of `pygame issue 2464 <https://github.com/pygame/pygame/issues/2464>`__.
+    """
+    if bool(sum((True if size > 1 else False for size in surface.get_size()))) and angle != 0:
+        return pygame.transform.rotate(surface, angle)
+    else:
+        return surface
 
 
 class Shape(object):
@@ -137,7 +148,7 @@ class BaseForm(Shape, ABC):
         self.surface = pygame.Surface((self.radius * 2, self.radius * 2), pygame.SRCALPHA)
         self.surface.set_alpha(self.alpha)
         self.make_shape()
-        self.rotate_shape()
+        self.surface = rotate(surface=self.surface, angle=self.angle)
         self.rect = self.surface.get_rect()
         return self.surface
 
@@ -146,12 +157,6 @@ class BaseForm(Shape, ABC):
         """
         raise NotImplementedError("BaseShape.make_shape() creates no shape."
                                   "Own functions have to be written for custom shapes.")
-
-    def rotate_shape(self):
-        """Rotates shape. Only called by :func:`BaseShape.make_shape()`
-        """
-        if self.radius > 1:  # pygame issue: https://github.com/pygame/pygame/issues/2464
-            self.surface = pygame.transform.rotate(self.surface, self.angle)
 
 
 class Circle(BaseForm, ABC):
@@ -258,6 +263,5 @@ class Image(Shape, ABC):
     def make_shape(self):
         if self.size != self._start_size:
             self.surface = pygame.transform.scale(self._start_surface, (int(self.size[0]), int(self.size[1])))
-        if self.angle != 0 and (self.size[0] > 1 and self.size[1] > 1):
-            self.surface = pygame.transform.rotate(self.surface, self.angle)
+        self.surface = rotate(surface=self.surface, angle=self.angle)
         self.rect = self.surface.get_rect()
