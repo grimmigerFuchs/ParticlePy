@@ -30,7 +30,7 @@ delta_time = 0
 particle_system = particlepy.particle.ParticleSystem()
 
 # load image
-image = pygame.image.load("data/image.png")
+image = pygame.image.load("data/image.png").convert()
 
 # main loop
 while True:
@@ -69,7 +69,7 @@ while True:
     particle_system.render(surface=display)
 
     # update display
-    screen.blit(pygame.transform.scale(display, SIZE), (0, 0))
+    screen.blit(pygame.transform.scale(display, SIZE, screen), (0, 0))
     pygame.display.update()
     display.fill((22, 27, 34))
     clock.tick(FPS)
