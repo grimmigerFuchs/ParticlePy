@@ -19,7 +19,7 @@ URL = "https://github.com/grimmigerFuchs/ParticlePy"
 EMAIL = "grimmigerFuchs@gmail.com"
 AUTHOR = "grimmigerFuchs"
 REQUIRES_PYTHON = ">=3.6.0"
-VERSION = "1.0.3"
+VERSION = "1.0.4"
 
 # What packages are required for this module to be executed?
 REQUIRED = [
@@ -102,6 +102,11 @@ setup(
     long_description_content_type='text/markdown',
     author=AUTHOR,
     author_email=EMAIL,
+    project_urls={
+        "GitHub Repo": "https://github.com/grimmigerFuchs/ParticlePy",
+        "Bugtracker": "https://github.com/grimmigerFuchs/ParticlePy/issues",
+        "Documentation": "https://particlepy.readthedocs.io/"
+    },
     python_requires=REQUIRES_PYTHON,
     url=URL,
     packages=find_packages(exclude=["tests", "*.tests", "*.tests.*", "tests.*"]),
@@ -118,12 +123,23 @@ setup(
     classifiers=[
         # Trove classifiers
         # Full list: https://pypi.python.org/pypi?%3Aaction=list_classifiers
-        'License :: OSI Approved :: MIT License',
-        'Programming Language :: Python',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: Implementation :: CPython',
-        'Programming Language :: Python :: Implementation :: PyPy'
+        "Intended Audience :: Developers",
+        "Intended Audience :: Education",
+        "License :: OSI Approved :: MIT License",
+        "Natural Language :: English",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: Implementation :: PyPy",
+        "Topic :: Games/Entertainment",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+        "Topic :: Software Development :: Libraries :: pygame"
+    ],
+    keywords=[
+        "game", "simulation", "game-development", "pygame", "particles", "particle-physics", "particle-system"
     ],
     # $ setup.py publish support.
     cmdclass={

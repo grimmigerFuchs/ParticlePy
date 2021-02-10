@@ -58,6 +58,7 @@ while True:
 
     # update particle properties
     particle_system.update(delta_time=delta_time)
+    print(len(particle_system.particles))
 
     # color manipulation
     for particle in particle_system.particles:

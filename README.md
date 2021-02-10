@@ -3,14 +3,13 @@
 	<p align="center">
     	<img src="https://raw.githubusercontent.com/grimmigerFuchs/ParticlePy/master/img/logo.svg" width=90>   
 	</p>
-  <h6 align="center">v1.0.3</h6>
   <!-- badges-->
 	<p align="center">
         <a href='https://particlepy.readthedocs.io/en/latest/?badge=latest' target="_blank">
             <img src='https://readthedocs.org/projects/particlepy/badge/?version=latest' alt='Documentation Status' />
         </a>
        	<a href="https://pypi.org/project/particlepy/" target="_blank">
-            <img src="https://img.shields.io/badge/pypi-1.0.3-blue" alt="PyPi Version" />
+            <img src="https://img.shields.io/badge/PyPi-1.0.4-blue" alt="PyPi Latest Stable" />
       	</a>
 	</p>
     <h5 align="center">
@@ -37,7 +36,7 @@
 
 - pygame
 
-- setuptools
+- *setuptools*
 
 - *Sphinx*
 
@@ -54,8 +53,6 @@
 
 ```bash
 pip install --upgrade particlepy
-# or
-pip install --upgrade git+https://github.com/grimmigerFuchs/ParticlePy.git
 ```
 
 
