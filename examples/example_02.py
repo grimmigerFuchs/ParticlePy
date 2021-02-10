@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# example.py
+# example_02.py
 
 import pygame
 import particlepy
