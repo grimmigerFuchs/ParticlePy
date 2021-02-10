@@ -5,7 +5,6 @@ import pygame
 import particlepy
 import sys
 import time
-import copy
 import random
 
 
