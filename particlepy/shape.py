@@ -3,7 +3,6 @@
 
 from typing import Tuple
 from abc import ABC
-import copy
 import numpy
 import contextlib
 
@@ -12,7 +11,6 @@ with contextlib.redirect_stdout(None):
 
 
 # TODO: AA shapes
-# todo: change _start_... to _orig_...
 
 
 def rotate(surface: pygame.Surface, angle: float):
@@ -28,7 +26,22 @@ def rotate(surface: pygame.Surface, angle: float):
 
 
 class Shape(object):
-    def __init__(self, alpha: float = 255, angle: float = 0):
+    """This is the shape class. It is only used to subclass and use as a base for shapes.
+
+    Args:
+        alpha (int, optional): Transparency of shape `(0 - 255 → RGBA)`, defaults to `255`
+        angle (float, optional): Degrees of rotation, defaults to `0`
+
+    Attributes:
+        alpha (int): Transparency of shape, ranges from `0` to `255`
+        _orig_alpha (int): Transparency of shape when being instanced. Property is :func:`Shape.orig_alpha()`
+        angle (float): Degrees of rotation
+        _orig_angle (float): Angle of shape when being instanced. Property is :func:`Shape.orig_angle()`
+    """
+
+    def __init__(self, alpha: int = 255, angle: float = 0):
+        """Constructor method
+        """
         self._orig_alpha = alpha
         self.alpha = self._orig_alpha
         self.angle = angle
@@ -39,25 +52,54 @@ class Shape(object):
 
     @property
     def orig_alpha(self):
+        """Returns original alpha
+
+        Returns:
+            int: :attr:`_orig_alpha`
+        """
         return self._orig_alpha
 
     @property
     def orig_angle(self):
+        """Returns original angle
+
+        Returns:
+            float: :attr:`_orig_angle`
+        """
         return self._orig_angle
 
     def check_size_above_zero(self) -> bool:
+        """Checks if surface size is above `null`
+
+        Returns:
+            bool: `True` if surface size above `null`, `False` if otherwise
+        """
         raise NotImplementedError
 
     def get_progress(self) -> Tuple[float, float]:
+        """Returns :attr:`progress` and :attr:`inverted_progress` of shape
+
+        Returns:
+            Tuple[float, float]: :attr:`progress`, :attr:`inverted_progress`
+        """
         raise NotImplementedError
 
     def decrease(self, delta: float):
+        """Decreases size by :attr:`attr`
+        """
         raise NotImplementedError
 
     def make_surface(self) -> pygame.Surface:
+        """Makes the surface by also calling :func:`Shape.make_shape()`
+
+        Returns:
+            :class:`pygame.Surface`: Surface of shape
+        """
         self.make_shape()
 
     def make_shape(self):
+        """Is being called by :func:`Shape.make_surface()` and used to make the visual representation of the shape
+        """
         raise NotImplementedError
 
 
@@ -68,22 +110,25 @@ class BaseForm(Shape, ABC):
     Args:
         radius (float): Radius of shape
         color (Tuple[int, int, int]): Color of shape
-        alpha (int, optional): Transparency of shape `(0 - 255)`, defaults to `255`
-        angle (float, optional): Degrees of rotation of shape, defaults to `0`
+        alpha (int, optional): Transparency of shape `(0 - 255 → RGBA)`, defaults to `255`
+        angle (float, optional): Degrees of rotation, defaults to `0`
 
     Attributes:
         radius (float): Radius of shape
-        _orig_radius (float): Radius of shape when being instanced. Property is :func:`BaseShape.start_radius`
-        angle (int): Degrees of rotation of shape
+        _orig_radius (float): Radius of shape when being instanced. Property is :func:`BaseForm.orig_radius()`
         color (List[int, int, int]): Color of shape
-        _orig_color (Tuple[int, int, int]): Color of shape when being instanced. Property is :func:`BaseShape.start_color`
+        _orig_color (Tuple[int, int, int]): Color of shape when being instanced. Property is :func:`BaseForm.orig_color()`
         alpha (int): Transparency of shape, ranges from `0` to `255`
-        _start_alpha (int): Transparency of shape when being instanced. Property is :func:`BaseShape.start_alpha`
+        _orig_alpha (int): Transparency of shape when being instanced. Property is :func:`BaseForm.orig_alpha()`
+        angle (int): Degrees of rotation of shape
+        _orig_angle (float): Angle of shape when being instanced. Property is :func:`BaseForm.orig_angle()`
         surface (:class:`pygame.Surface`): Pygame surface of shape
         rect (:class:`pygame.Rect`): Pygame Rect of :attr:`surface`. Position does not affect anything
     """
 
     def __init__(self, radius: float, color: Tuple[int, int, int], alpha: int = 255, angle: float = 0):
+        """Constructor method
+        """
         super(BaseForm, self).__init__(alpha=alpha, angle=angle)
 
         self.radius = radius
@@ -92,24 +137,23 @@ class BaseForm(Shape, ABC):
         self.color = list(color)
         self._orig_color = tuple(self.color)
 
-        self.rect = None
-        self.surface = self.make_surface()
+        self.make_surface()
 
     @property
     def orig_radius(self):
-        """Returns :attr:`_start_radius`
+        """Returns :attr:`_orig_radius`
 
         Returns:
-            float: :attr:`_start_radius`
+            float: :attr:`_orig_radius`
         """
         return self._orig_radius
 
     @property
     def orig_color(self):
-        """Returns :attr:`_start_color`
+        """Returns :attr:`_orig_color`
 
         Returns:
-            Tuple[int]: :attr:`_start_color`
+            Tuple[int]: :attr:`_orig_color`
         """
         return self._orig_color
 
@@ -139,10 +183,10 @@ class BaseForm(Shape, ABC):
             self.radius = 0
 
     def make_surface(self) -> pygame.Surface:
-        """Creates shape surface and rect by calling :func:`BaseShape.make_shape()` and :func:`BaseShape.rotate()`
+        """Makes the surface by also calling :func:`Shape.make_shape()`
 
         Returns:
-            :class:`pygame.Surface`: Currently created shape surface (:attr:`surface`)
+            :class:`pygame.Surface`: Surface of shape
         """
         self.surface = pygame.Surface((self.radius * 2, self.radius * 2), pygame.SRCALPHA)
         self.surface.set_alpha(self.alpha)
@@ -154,31 +198,35 @@ class BaseForm(Shape, ABC):
     def make_shape(self):
         """Creates shape for shape surface. Can be modified to make different shapes and effects.
         """
-        raise NotImplementedError("BaseShape.make_shape() creates no shape."
-                                  "Own functions have to be written for custom shapes.")
+        raise NotImplementedError(
+            "BaseForm.make_shape() creates no shape. Own functions have to be written for custom shapes.")
 
 
 class Circle(BaseForm, ABC):
-    """Circle shape class. Is subclass of :class:`BaseShape` and inherits all attributes and methods
+    """Circle shape class. Is subclass of :class:`BaseForm` and inherits all attributes and methods
 
     Args:
         radius (float): Radius of shape
         color (Tuple[int, int, int]): Color of shape
-        alpha (int, optional): Transparency of shape `(0 - 255)`, defaults to `255`
-        angle (float, optional): Degrees of rotation of shape, defaults to `0`
+        alpha (int, optional): Transparency of shape `(0 - 255 → RGBA)`, defaults to `255`
+        angle (float, optional): Degrees of rotation, defaults to `0`
 
     Attributes:
         radius (float): Radius of shape
-        _start_radius (float): Radius of shape when being instanced. Property is :func:`BaseShape.start_radius`
-        angle (int): Degrees of rotation of shape
+        _orig_radius (float): Radius of shape when being instanced. Property is :func:`Circle.orig_radius()`
         color (List[int, int, int]): Color of shape
-        _start_color (Tuple[int, int, int]): Color of shape when being instanced. Property is :func:`BaseShape.start_color`
+        _orig_color (Tuple[int, int, int]): Color of shape when being instanced. Property is :func:`Circle.orig_color()`
         alpha (int): Transparency of shape, ranges from `0` to `255`
-        _start_alpha (int): Transparency of shape when being instanced. Property is :func:`BaseShape.start_alpha`
+        _orig_alpha (int): Transparency of shape when being instanced. Property is :func:`Circle.orig_alpha()`
+        angle (int): Degrees of rotation of shape
+        _orig_angle (float): Angle of shape when being instanced. Property is :func:`Circle.orig_angle()`
         surface (:class:`pygame.Surface`): Pygame surface of shape
+        rect (:class:`pygame.Rect`): Pygame Rect of :attr:`surface`. Position does not affect anything
     """
 
     def __init__(self, radius: float, color: Tuple[int, int, int], alpha: int = 255, angle: float = 0):
+        """Constructor method
+        """
         super(Circle, self).__init__(radius, color, alpha, angle)
 
     def make_shape(self):
@@ -188,26 +236,30 @@ class Circle(BaseForm, ABC):
 
 
 class Rect(BaseForm, ABC):
-    """Rectangle shape class. Is subclass of :class:`BaseShape` and inherits all attributes and methods
+    """Rectangle shape class. Is subclass of :class:`BaseForm` and inherits all attributes and methods
 
     Args:
         radius (float): Radius of shape
         color (Tuple[int, int, int]): Color of shape
-        alpha (int, optional): Transparency of shape `(0 - 255)`, defaults to `255`
-        angle (float, optional): Degrees of rotation of shape, defaults to `0`
+        alpha (int, optional): Transparency of shape `(0 - 255 → RGBA)`, defaults to `255`
+        angle (float, optional): Degrees of rotation, defaults to `0`
 
     Attributes:
         radius (float): Radius of shape
-        _start_radius (float): Radius of shape when being instanced. Property is :func:`BaseShape.start_radius`
-        angle (int): Degrees of rotation of shape
+        _orig_radius (float): Radius of shape when being instanced. Property is :func:`Rect.orig_radius()`
         color (List[int, int, int]): Color of shape
-        _start_color (Tuple[int, int, int]): Color of shape when being instanced. Property is :func:`BaseShape.start_color`
+        _orig_color (Tuple[int, int, int]): Color of shape when being instanced. Property is :func:`Rect.orig_color()`
         alpha (int): Transparency of shape, ranges from `0` to `255`
-        _start_alpha (int): Transparency of shape when being instanced. Property  is :func:`BaseShape.start_alpha`
+        _orig_alpha (int): Transparency of shape when being instanced. Property is :func:`Rect.orig_alpha()`
+        angle (int): Degrees of rotation of shape
+        _orig_angle (float): Angle of shape when being instanced. Property is :func:`Rect.orig_angle()`
         surface (:class:`pygame.Surface`): Pygame surface of shape
+        rect (:class:`pygame.Rect`): Pygame Rect of :attr:`surface`. Position does not affect anything
     """
 
     def __init__(self, radius: float, color: Tuple[int, int, int], alpha: int = 255, angle: float = 0):
+        """Constructor method
+        """
         super(Rect, self).__init__(radius, color, alpha, angle)
 
     def make_shape(self):
@@ -217,49 +269,97 @@ class Rect(BaseForm, ABC):
 
 
 class Image(Shape, ABC):
-    # todo: copy
+    """Image shape class. Is subclass of :class:`Shape` and inherits all attributes and methods and adds to it
+
+    Args:
+        surface (:class:`pygame.Surface`): Surface of shape
+        size (Tuple[int, int]): Scaled size of surface
+        alpha (int, optional): Transparency of shape `(0 - 255 → RGBA)`, defaults to `255`
+        angle (float, optional): Degrees of rotation, defaults to `0`
+
+    Attributes:
+        alpha (int): Transparency of shape, ranges from `0` to `255`
+        _orig_alpha (int): Transparency of shape when being instanced. Property is :func:`Image.orig_alpha()`
+        angle (int): Degrees of rotation of shape
+        _orig_angle (float): Angle of shape when being instanced. Property is :func:`Image.orig_angle()`
+        size (List[int, int]): Scaled size of surface
+        _orig_size (Tuple[int, int]): Scaled size of shape when being instanced. Property is :func:`Image.orig_size()`
+        surface (:class:`pygame.Surface`): Pygame surface of shape
+        _orig_surface (:class:`pygame.Surface): Surface of shape when being instanced. Property is :func:`Image.orig_surface()`
+        rect (:class:`pygame.Rect`): Pygame Rect of :attr:`surface`. Position does not affect anything
+    """
+
     def __init__(self, surface: pygame.Surface, size: Tuple[int, int], alpha: int = 255, angle: float = 0):
+        """Constructor method
+        """
         super(Image, self).__init__(alpha=alpha, angle=angle)
         self._orig_size = tuple(size)
         self.size = list(self._orig_size)
 
         self._orig_surface = surface.copy()
-        self.surface = None
-        self.rect = None
 
         self.make_surface()
 
     @property
     def orig_size(self):
+        """Returns :attr:`_orig_size`
+
+        Returns:
+            Tuple[int, int]: :attr:`_orig_size`
+        """
         return self._orig_size
 
     @property
     def orig_surface(self):
+        """Returns :attr:`_orig_surface`
+
+        Returns:
+            Tuple[int, int]: :attr:`_orig_surface`
+        """
         return self._orig_surface
 
     def check_size_above_zero(self) -> bool:
+        """Checks if surface size is above `null`
+
+        Returns:
+            bool: `True` if surface size above `null`, `False` if otherwise
+        """
         if (self.size[0] > 0) and (self.size[1] > 0):
             return True
         else:
             return False
 
     def get_progress(self) -> Tuple[float, float]:
+        """Returns :attr:`progress` and :attr:`inverted_progress` of shape
+
+        Returns:
+            Tuple[float, float]: :attr:`progress`, :attr:`inverted_progress`
+        """
         progress = (self.size[0] - numpy.diff(self.size) / 2) / (self._orig_size[0] - numpy.diff(self._orig_size) / 2)
         return progress, 1 - progress
 
     def decrease(self, delta: float):
+        """Decreases size by :attr:`attr`
+        """
         for i in range(2):
             self.size[i] -= delta
             if self.size[i] <= 0:
                 self.size[i] = 0
 
     def make_surface(self) -> pygame.Surface:
+        """Makes the surface by also calling :func:`Image.make_shape()`
+
+        Returns:
+            :class:`pygame.Surface`: Surface of shape
+        """
         self.make_shape()
         if self.alpha < 255:
             self.surface.set_alpha(self.alpha)
         return self.surface
 
     def make_shape(self):
+        """Is being called by :func:`Image.make_surface()` and used to make the visual representation of the shape
+        """
         if self.size != self._orig_size:
             self.surface = pygame.transform.scale(self._orig_surface, (int(self.size[0]), int(self.size[1])))
         self.surface = rotate(surface=self.surface, angle=self.angle)
