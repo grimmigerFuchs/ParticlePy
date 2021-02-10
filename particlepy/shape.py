@@ -283,9 +283,9 @@ class Image(Shape, ABC):
         angle (int): Degrees of rotation of shape
         _orig_angle (float): Angle of shape when being instanced. Property is :func:`Image.orig_angle()`
         size (List[int, int]): Scaled size of surface
-        _orig_size (Tuple[int, int]): Scaled size of shape when being instanced. Property is :func:`Image.orig_size()`
+        _orig_size (Tuple[int, int]): Scaled size of surface shape when being instanced. Property is :func:`Image.orig_size()`
         surface (:class:`pygame.Surface`): Pygame surface of shape
-        _orig_surface (:class:`pygame.Surface): Surface of shape when being instanced. Property is :func:`Image.orig_surface()`
+        _orig_surface (:class:`pygame.Surface`): Surface of shape when being instanced. Property is :func:`Image.orig_surface()`
         rect (:class:`pygame.Rect`): Pygame Rect of :attr:`surface`. Position does not affect anything
     """
 
@@ -297,7 +297,6 @@ class Image(Shape, ABC):
         self.size = list(self._orig_size)
 
         self._orig_surface = surface.copy()
-
         self.make_surface()
 
     @property
