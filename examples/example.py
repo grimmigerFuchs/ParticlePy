@@ -43,6 +43,10 @@ while True:
     delta_time = now - old_time
     old_time = now
 
+    # update particle properties
+    particle_system.update(delta_time=delta_time)
+    print(len(particle_system.particles))
+
     # get mouse position
     mouse_pos = pygame.mouse.get_pos()
 
@@ -55,10 +59,6 @@ while True:
                                          position=mouse_pos,
                                          velocity=(random.uniform(-150, 150), random.uniform(-150, 150)),
                                          delta_radius=0.2))
-
-    # update particle properties
-    particle_system.update(delta_time=delta_time)
-    print(len(particle_system.particles))
 
     # color manipulation
     for particle in particle_system.particles:

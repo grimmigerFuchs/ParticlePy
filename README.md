@@ -9,7 +9,7 @@
             <img src='https://readthedocs.org/projects/particlepy/badge/?version=latest' alt='Documentation Status' />
         </a>
        	<a href="https://pypi.org/project/particlepy/" target="_blank">
-            <img src="https://img.shields.io/badge/PyPi-1.0.4-blue" alt="PyPi Latest Stable" />
+            <img src="https://img.shields.io/badge/PyPi-1.1.0-blue" alt="PyPi Latest Stable" />
       	</a>
 	</p>
     <h5 align="center">
@@ -35,6 +35,8 @@
 ## Dependencies
 
 - pygame
+
+- numpy
 
 - *setuptools*
 
@@ -117,6 +119,10 @@ while True:
     delta_time = now - old_time
     old_time = now
 
+    # update particle properties
+    particle_system.update(delta_time=delta_time)
+    print(len(particle_system.particles))
+
     # get mouse position
     mouse_pos = pygame.mouse.get_pos()
 
@@ -129,9 +135,6 @@ while True:
                                          position=mouse_pos,
                                          velocity=(random.uniform(-150, 150), random.uniform(-150, 150)),
                                          delta_radius=0.2))
-
-    # update particle properties
-    particle_system.update(delta_time=delta_time)
 
     # color manipulation
     for particle in particle_system.particles:
@@ -153,9 +156,10 @@ while True:
     pygame.display.update()
     screen.fill((13, 17, 23))
     clock.tick(FPS)
+
 ```
 
-![Gif of particle simulation](https://media.giphy.com/media/961YhKg8e59t0Y9eUu/giphy.gif)
+![Gif of example program](https://media.giphy.com/media/961YhKg8e59t0Y9eUu/giphy.gif)
 
 
 
@@ -169,5 +173,5 @@ information.
 # Contact
 
 grimmigerFuchs - [grimmigerfuchs@gmail.com](mailto:grimmigerFuchs@gmail.com)\
-Github Repository: [https://github.com/grimmigerFuchs/ParticlePy](https://github.com/grimmigerFuchs/ParticlePy)\
-PyPi Project: [https://pypi.org/project/particlepy/](https://pypi.org/project/particlepy/)
+Github: [https://github.com/grimmigerFuchs/ParticlePy](https://github.com/grimmigerFuchs/ParticlePy)\
+PyPi: [https://pypi.org/project/particlepy/](https://pypi.org/project/particlepy/)
