@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 from typing import Tuple, List
-import copy
 import contextlib
 
 with contextlib.redirect_stdout(None):
@@ -38,7 +37,7 @@ class Particle(object):
                  delta_radius: float, data: dict = None, alive: bool = True):
         """Constructor method
         """
-        self.shape = copy.copy(shape)
+        self.shape = shape
 
         self.position = list(position)
         self.velocity = list(velocity)
@@ -130,7 +129,7 @@ class ParticleSystem(object):
             Exception: Particle system is not alive, not able to add particles
         """
         if self.alive:
-            self.particles.append(copy.copy(particle))
+            self.particles.append(particle)
         else:
             raise Exception("Particle system is not alive, not able to add particles")
 
