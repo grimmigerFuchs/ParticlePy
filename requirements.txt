@@ -1,5 +1,7 @@
-Sphinx
-sphinx_rtd_theme
+# package
 pygame
 numpy
-setuptools
+
+# documentation
+Sphinx
+sphinx_rtd_theme
