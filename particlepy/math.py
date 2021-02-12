@@ -22,9 +22,7 @@ def fade_color(particle: particlepy.particle.Particle, color: Tuple[int, int, in
         AssertionError: If :attr:`particle.shape` not :class:`particlepy.shape.BaseForm`
     """
     assert isinstance(particle.shape, particlepy.shape.BaseForm)
-    return [particle.shape.orig_color[0] + (color[0] - particle.shape.orig_color[0]) * progress,
-            particle.shape.orig_color[1] + (color[1] - particle.shape.orig_color[1]) * progress,
-            particle.shape.orig_color[2] + (color[2] - particle.shape.orig_color[2]) * progress]
+    return [particle.shape.orig_color[i] + (color[i] - particle.shape.orig_color[i]) * progress for i in range(3)]
 
 
 def fade_alpha(particle: particlepy.particle.Particle, alpha: int, progress: float) -> float:
