@@ -23,7 +23,8 @@ VERSION = "1.0.4"
 
 # What packages are required for this module to be executed?
 REQUIRED = [
-    "pygame"
+    "pygame",
+    "numpy"
 ]
 
 # What packages are optional?
