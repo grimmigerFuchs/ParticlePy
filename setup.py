@@ -104,7 +104,7 @@ setup(
     author=AUTHOR,
     author_email=EMAIL,
     project_urls={
-        "GitHub Repo": "https://github.com/grimmigerFuchs/ParticlePy",
+        "GitHub": "https://github.com/grimmigerFuchs/ParticlePy",
         "Bugtracker": "https://github.com/grimmigerFuchs/ParticlePy/issues",
         "Documentation": "https://particlepy.readthedocs.io/"
     },
